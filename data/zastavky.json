@@ -1,0 +1,1304 @@
+[
+ {
+  "name": "Slatiňany",
+  "lat": 49.9189244,
+  "lon": 15.8251485,
+  "kind": "vlak"
+ },
+ {
+  "name": "Chrudim zastávka",
+  "lat": 49.9592549,
+  "lon": 15.781184,
+  "kind": "vlak"
+ },
+ {
+  "name": "Tuněchody",
+  "lat": 49.9744634,
+  "lon": 15.8497973,
+  "kind": "vlak"
+ },
+ {
+  "name": "Úhřetice",
+  "lat": 49.9774007,
+  "lon": 15.8623176,
+  "kind": "vlak"
+ },
+ {
+  "name": "Vejvanovice",
+  "lat": 49.9730169,
+  "lon": 15.8731359,
+  "kind": "vlak"
+ },
+ {
+  "name": "Medlešice",
+  "lat": 49.974621,
+  "lon": 15.7676566,
+  "kind": "vlak"
+ },
+ {
+  "name": "Nemošice, točna",
+  "lat": 50.0087287,
+  "lon": 15.808946,
+  "kind": "bus"
+ },
+ {
+  "name": "Ostřešany, park",
+  "lat": 49.9931788,
+  "lon": 15.8063008,
+  "kind": "bus"
+ },
+ {
+  "name": "Ostřešany, točna",
+  "lat": 49.9893157,
+  "lon": 15.8274796,
+  "kind": "bus"
+ },
+ {
+  "name": "Ostřešany, škola",
+  "lat": 49.99451,
+  "lon": 15.7984602,
+  "kind": "bus"
+ },
+ {
+  "name": "Ostřešany, škola",
+  "lat": 49.99437,
+  "lon": 15.7983468,
+  "kind": "bus"
+ },
+ {
+  "name": "Nemošice, 5. května",
+  "lat": 50.0096925,
+  "lon": 15.8038302,
+  "kind": "bus"
+ },
+ {
+  "name": "Starý Mateřov, náves",
+  "lat": 50.0019142,
+  "lon": 15.7159639,
+  "kind": "bus"
+ },
+ {
+  "name": "Starý Mateřov, náves",
+  "lat": 50.0017212,
+  "lon": 15.7158398,
+  "kind": "bus"
+ },
+ {
+  "name": "Dražkovice",
+  "lat": 50.0006422,
+  "lon": 15.7716429,
+  "kind": "bus"
+ },
+ {
+  "name": "Dražkovice",
+  "lat": 50.0006735,
+  "lon": 15.7720198,
+  "kind": "bus"
+ },
+ {
+  "name": "Nemošice, 5. května",
+  "lat": 50.0096674,
+  "lon": 15.8035168,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, sportovní areály",
+  "lat": 49.9381827,
+  "lon": 15.8032138,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, sportovní areály",
+  "lat": 49.9380127,
+  "lon": 15.8032112,
+  "kind": "bus"
+ },
+ {
+  "name": "Zaječice",
+  "lat": 49.9005258,
+  "lon": 15.8798839,
+  "kind": "vlak"
+ },
+ {
+  "name": "Chrudim, Kalábrie",
+  "lat": 49.9460611,
+  "lon": 15.7935138,
+  "kind": "bus"
+ },
+ {
+  "name": "Staré Jesenčany",
+  "lat": 49.9984568,
+  "lon": 15.7548792,
+  "kind": "bus"
+ },
+ {
+  "name": "Staré Jesenčany",
+  "lat": 49.9991211,
+  "lon": 15.7550413,
+  "kind": "bus"
+ },
+ {
+  "name": "Dubany, V alejích",
+  "lat": 49.9919765,
+  "lon": 15.7194819,
+  "kind": "bus"
+ },
+ {
+  "name": "Staré Jesenčany",
+  "lat": 50.0000617,
+  "lon": 15.7570714,
+  "kind": "vlak"
+ },
+ {
+  "name": "Sobětuchy, Vrcha",
+  "lat": 49.9359664,
+  "lon": 15.768329,
+  "kind": "bus"
+ },
+ {
+  "name": "Sobětuchy, Vrcha",
+  "lat": 49.93581,
+  "lon": 15.7682375,
+  "kind": "bus"
+ },
+ {
+  "name": "Mikulovice, Staňkova",
+  "lat": 49.9899341,
+  "lon": 15.7789485,
+  "kind": "bus"
+ },
+ {
+  "name": "Mikulovice, škola",
+  "lat": 49.9899143,
+  "lon": 15.7748887,
+  "kind": "bus"
+ },
+ {
+  "name": "Mikulovice, škola",
+  "lat": 49.9899617,
+  "lon": 15.7746944,
+  "kind": "bus"
+ },
+ {
+  "name": "Dražkovice, dolní",
+  "lat": 50.0042457,
+  "lon": 15.772648,
+  "kind": "bus"
+ },
+ {
+  "name": "Dražkovice, dolní",
+  "lat": 50.0047137,
+  "lon": 15.7729997,
+  "kind": "bus"
+ },
+ {
+  "name": "Rabštejn",
+  "lat": 49.9053207,
+  "lon": 15.7567188,
+  "kind": "bus"
+ },
+ {
+  "name": "Úhřetice",
+  "lat": 49.9785,
+  "lon": 15.8667167,
+  "kind": "bus"
+ },
+ {
+  "name": "Tuněchody, kovárna",
+  "lat": 49.9844806,
+  "lon": 15.8427382,
+  "kind": "bus"
+ },
+ {
+  "name": "Tuněchody, kovárna",
+  "lat": 49.9842667,
+  "lon": 15.8425333,
+  "kind": "bus"
+ },
+ {
+  "name": "Tuněchody, kostel",
+  "lat": 49.9791502,
+  "lon": 15.8409497,
+  "kind": "bus"
+ },
+ {
+  "name": "Tuněchody, kostel",
+  "lat": 49.9793229,
+  "lon": 15.8412439,
+  "kind": "bus"
+ },
+ {
+  "name": "Tuněchody, cihelna",
+  "lat": 49.9796666,
+  "lon": 15.8537607,
+  "kind": "bus"
+ },
+ {
+  "name": "Tuněchody, cihelna",
+  "lat": 49.9797565,
+  "lon": 15.853805,
+  "kind": "bus"
+ },
+ {
+  "name": "Úhřetice",
+  "lat": 49.9787408,
+  "lon": 15.8668711,
+  "kind": "bus"
+ },
+ {
+  "name": "Čepí, prodejna",
+  "lat": 49.9860082,
+  "lon": 15.7162049,
+  "kind": "bus"
+ },
+ {
+  "name": "Čepí, prodejna",
+  "lat": 49.9859606,
+  "lon": 15.7159846,
+  "kind": "bus"
+ },
+ {
+  "name": "Starý Mateřov, točna",
+  "lat": 50.0012466,
+  "lon": 15.7236699,
+  "kind": "bus"
+ },
+ {
+  "name": "Hostovice",
+  "lat": 50.0028688,
+  "lon": 15.8668627,
+  "kind": "bus"
+ },
+ {
+  "name": "Hostovice",
+  "lat": 50.0026897,
+  "lon": 15.8667627,
+  "kind": "bus"
+ },
+ {
+  "name": "Rabštejnská Lhota",
+  "lat": 49.9155725,
+  "lon": 15.7690737,
+  "kind": "bus"
+ },
+ {
+  "name": "Ostřešany, hřiště",
+  "lat": 49.9985465,
+  "lon": 15.798484,
+  "kind": "bus"
+ },
+ {
+  "name": "Ostřešany, hřiště",
+  "lat": 49.9984245,
+  "lon": 15.7986654,
+  "kind": "bus"
+ },
+ {
+  "name": "Ostřešany, park",
+  "lat": 49.9930515,
+  "lon": 15.8065442,
+  "kind": "bus"
+ },
+ {
+  "name": "Dražkovice",
+  "lat": 50.0000236,
+  "lon": 15.7717457,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, V Tejnecku",
+  "lat": 49.949259,
+  "lon": 15.8041588,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, V Tejnecku",
+  "lat": 49.9496863,
+  "lon": 15.8052316,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim",
+  "lat": 49.9482418,
+  "lon": 15.7867546,
+  "kind": "vlak"
+ },
+ {
+  "name": "Chrudim, Obce Ležáků",
+  "lat": 49.9441732,
+  "lon": 15.7952291,
+  "kind": "bus"
+ },
+ {
+  "name": "Úhřetická Lhota",
+  "lat": 49.9892685,
+  "lon": 15.8731499,
+  "kind": "bus"
+ },
+ {
+  "name": "Úhřetická Lhota",
+  "lat": 49.9894906,
+  "lon": 15.8731911,
+  "kind": "bus"
+ },
+ {
+  "name": "Úhřetická Lhota",
+  "lat": 49.9895405,
+  "lon": 15.8738581,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Obce Ležáků",
+  "lat": 49.9429256,
+  "lon": 15.7947988,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Škroupova",
+  "lat": 49.9467748,
+  "lon": 15.7917756,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, autobusové stanoviště",
+  "lat": 49.950478,
+  "lon": 15.78594,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, dopravní terminál",
+  "lat": 49.9483974,
+  "lon": 15.7874233,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, hasič. stanice",
+  "lat": 49.9513068,
+  "lon": 15.8060243,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Na Větrníku",
+  "lat": 49.9557357,
+  "lon": 15.8143027,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, U kapličky",
+  "lat": 49.956494,
+  "lon": 15.8099863,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Stromovka",
+  "lat": 49.9514534,
+  "lon": 15.815274,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Městské sady",
+  "lat": 49.9548562,
+  "lon": 15.788596,
+  "kind": "bus"
+ },
+ {
+  "name": "Blato",
+  "lat": 49.9903139,
+  "lon": 15.7639465,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim město",
+  "lat": 49.9574834,
+  "lon": 15.7940455,
+  "kind": "vlak"
+ },
+ {
+  "name": "Chrudim, Podhůra",
+  "lat": 49.925015,
+  "lon": 15.7842888,
+  "kind": "bus"
+ },
+ {
+  "name": "Slatiňany, prodejna",
+  "lat": 49.9212487,
+  "lon": 15.8140495,
+  "kind": "bus"
+ },
+ {
+  "name": "Slatiňany, prodejna",
+  "lat": 49.9210989,
+  "lon": 15.8142614,
+  "kind": "bus"
+ },
+ {
+  "name": "Orel",
+  "lat": 49.9195334,
+  "lon": 15.8379628,
+  "kind": "bus"
+ },
+ {
+  "name": "Čejkovice",
+  "lat": 49.9056155,
+  "lon": 15.7397363,
+  "kind": "bus"
+ },
+ {
+  "name": "Morašice, Janovice, dolní",
+  "lat": 49.9175677,
+  "lon": 15.7120666,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Poděbradova",
+  "lat": 49.9537254,
+  "lon": 15.7915212,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Tovární",
+  "lat": 49.9556797,
+  "lon": 15.7973413,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Tovární",
+  "lat": 49.9555309,
+  "lon": 15.7974674,
+  "kind": "bus"
+ },
+ {
+  "name": "Rabštejnská Lhota",
+  "lat": 49.9158683,
+  "lon": 15.769113,
+  "kind": "bus"
+ },
+ {
+  "name": "Smrkový Týnec, křižovatka",
+  "lat": 49.9007377,
+  "lon": 15.7593888,
+  "kind": "bus"
+ },
+ {
+  "name": "Smrkový Týnec, křižovatka",
+  "lat": 49.9007801,
+  "lon": 15.7594614,
+  "kind": "bus"
+ },
+ {
+  "name": "Rabštejn",
+  "lat": 49.9052497,
+  "lon": 15.7566945,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Průmyslová II",
+  "lat": 49.9572289,
+  "lon": 15.7654962,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Průmyslová I",
+  "lat": 49.9566771,
+  "lon": 15.7744786,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Strojařů",
+  "lat": 49.9542255,
+  "lon": 15.7763371,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, obchodní centrum",
+  "lat": 49.9462269,
+  "lon": 15.8088846,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, sídliště U Stadionu",
+  "lat": 49.9395265,
+  "lon": 15.7967949,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, S. K. Neumanna",
+  "lat": 49.9405681,
+  "lon": 15.7953096,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, sídliště U Stadionu",
+  "lat": 49.9389588,
+  "lon": 15.7974386,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Myslivecký dům",
+  "lat": 49.950892,
+  "lon": 15.8012373,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Na Větrníku-hřiště",
+  "lat": 49.953466,
+  "lon": 15.8173044,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, V Malecku",
+  "lat": 49.9543897,
+  "lon": 15.8122639,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, V Malecku",
+  "lat": 49.954121,
+  "lon": 15.8125509,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Na Šancích",
+  "lat": 49.9507436,
+  "lon": 15.816353,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, autoservis",
+  "lat": 49.9364865,
+  "lon": 15.7967352,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, autoservis",
+  "lat": 49.936709,
+  "lon": 15.7967701,
+  "kind": "bus"
+ },
+ {
+  "name": "Markovice, Okružní",
+  "lat": 49.9548639,
+  "lon": 15.7616231,
+  "kind": "bus"
+ },
+ {
+  "name": "Markovice, hřiště",
+  "lat": 49.9565663,
+  "lon": 15.757986,
+  "kind": "bus"
+ },
+ {
+  "name": "Markovice, Vaňkova",
+  "lat": 49.9518718,
+  "lon": 15.764607,
+  "kind": "bus"
+ },
+ {
+  "name": "Markovice, Vaňkova",
+  "lat": 49.9517269,
+  "lon": 15.7647351,
+  "kind": "bus"
+ },
+ {
+  "name": "Markovice, prodejna",
+  "lat": 49.9536196,
+  "lon": 15.7557846,
+  "kind": "bus"
+ },
+ {
+  "name": "Markovice, prodejna",
+  "lat": 49.9534807,
+  "lon": 15.7558765,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, dětský domov",
+  "lat": 49.9513554,
+  "lon": 15.7743557,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, dětský domov",
+  "lat": 49.9515491,
+  "lon": 15.7757637,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Na Rozhledně",
+  "lat": 49.9538473,
+  "lon": 15.7799078,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Na Rozhledně",
+  "lat": 49.9545334,
+  "lon": 15.778928,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Tyršovo náměstí",
+  "lat": 49.9506784,
+  "lon": 15.7982782,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Masarykovo náměstí",
+  "lat": 49.9530078,
+  "lon": 15.7895871,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Čáslavská",
+  "lat": 49.9527016,
+  "lon": 15.7860031,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Čáslavská",
+  "lat": 49.9523862,
+  "lon": 15.7863912,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Družstevní",
+  "lat": 49.9516427,
+  "lon": 15.809465,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Václavská-nemocnice",
+  "lat": 49.9418477,
+  "lon": 15.8058701,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, nemocnice",
+  "lat": 49.9428023,
+  "lon": 15.8060545,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, nemocnice",
+  "lat": 49.9429444,
+  "lon": 15.8059569,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Dr. Malíka",
+  "lat": 49.9469586,
+  "lon": 15.8079089,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Stromovka",
+  "lat": 49.951726,
+  "lon": 15.8148978,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Topolská",
+  "lat": 49.9510624,
+  "lon": 15.8105841,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Topolská",
+  "lat": 49.951172,
+  "lon": 15.8103957,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Dr. Malíka",
+  "lat": 49.94681,
+  "lon": 15.8082201,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Novoměstská",
+  "lat": 49.9471542,
+  "lon": 15.8010836,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Novoměstská",
+  "lat": 49.9469443,
+  "lon": 15.8017013,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Na Valech",
+  "lat": 49.9484619,
+  "lon": 15.8008075,
+  "kind": "bus"
+ },
+ {
+  "name": "Slatiňany, Sokolovo",
+  "lat": 49.9131756,
+  "lon": 15.8175827,
+  "kind": "bus"
+ },
+ {
+  "name": "Slatiňany, Sokolovo",
+  "lat": 49.9131449,
+  "lon": 15.817415,
+  "kind": "bus"
+ },
+ {
+  "name": "Slatiňany, hřebčín",
+  "lat": 49.9220988,
+  "lon": 15.8073051,
+  "kind": "bus"
+ },
+ {
+  "name": "Slatiňany, hřebčín",
+  "lat": 49.921952,
+  "lon": 15.8071013,
+  "kind": "bus"
+ },
+ {
+  "name": "Slatiňany, střed",
+  "lat": 49.9200204,
+  "lon": 15.8139577,
+  "kind": "bus"
+ },
+ {
+  "name": "Slatiňany, střed",
+  "lat": 49.9197657,
+  "lon": 15.8138692,
+  "kind": "bus"
+ },
+ {
+  "name": "Zaječice, škola",
+  "lat": 49.9100082,
+  "lon": 15.8845045,
+  "kind": "bus"
+ },
+ {
+  "name": "Zaječice, škola",
+  "lat": 49.9098433,
+  "lon": 15.8843073,
+  "kind": "bus"
+ },
+ {
+  "name": "Zaječice, zdravotní středisko",
+  "lat": 49.9099383,
+  "lon": 15.8799152,
+  "kind": "bus"
+ },
+ {
+  "name": "Zaječice",
+  "lat": 49.9109427,
+  "lon": 15.8823735,
+  "kind": "bus"
+ },
+ {
+  "name": "Zaječice",
+  "lat": 49.911178,
+  "lon": 15.8818062,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Podhůra",
+  "lat": 49.92455,
+  "lon": 15.7846914,
+  "kind": "bus"
+ },
+ {
+  "name": "Topol",
+  "lat": 49.9599281,
+  "lon": 15.840248,
+  "kind": "bus"
+ },
+ {
+  "name": "Topol",
+  "lat": 49.9599061,
+  "lon": 15.8400772,
+  "kind": "bus"
+ },
+ {
+  "name": "Topol, MŠ",
+  "lat": 49.9578786,
+  "lon": 15.8398202,
+  "kind": "bus"
+ },
+ {
+  "name": "Topol, MŠ",
+  "lat": 49.9579181,
+  "lon": 15.8399274,
+  "kind": "bus"
+ },
+ {
+  "name": "Čepí",
+  "lat": 49.9829105,
+  "lon": 15.720052,
+  "kind": "bus"
+ },
+ {
+  "name": "Čepí",
+  "lat": 49.9829644,
+  "lon": 15.7198846,
+  "kind": "bus"
+ },
+ {
+  "name": "Starý Mateřov, odbočka",
+  "lat": 50.001913,
+  "lon": 15.7087715,
+  "kind": "bus"
+ },
+ {
+  "name": "Starý Mateřov, odbočka",
+  "lat": 50.0018445,
+  "lon": 15.708634,
+  "kind": "bus"
+ },
+ {
+  "name": "Dubany",
+  "lat": 49.9955475,
+  "lon": 15.7255306,
+  "kind": "bus"
+ },
+ {
+  "name": "Dubany",
+  "lat": 49.9956682,
+  "lon": 15.7252208,
+  "kind": "bus"
+ },
+ {
+  "name": "Třebosice",
+  "lat": 49.9971442,
+  "lon": 15.7347058,
+  "kind": "bus"
+ },
+ {
+  "name": "Třebosice",
+  "lat": 49.9971616,
+  "lon": 15.7350155,
+  "kind": "bus"
+ },
+ {
+  "name": "Dubany, V alejích",
+  "lat": 49.9919754,
+  "lon": 15.7193589,
+  "kind": "bus"
+ },
+ {
+  "name": "Čepí, křižovatka",
+  "lat": 49.9854475,
+  "lon": 15.716342,
+  "kind": "bus"
+ },
+ {
+  "name": "Čepí, křižovatka",
+  "lat": 49.9853591,
+  "lon": 15.7162991,
+  "kind": "bus"
+ },
+ {
+  "name": "Blato",
+  "lat": 49.9902943,
+  "lon": 15.7636817,
+  "kind": "bus"
+ },
+ {
+  "name": "Mikulovice",
+  "lat": 49.9903521,
+  "lon": 15.774259,
+  "kind": "bus"
+ },
+ {
+  "name": "Mikulovice",
+  "lat": 49.9902357,
+  "lon": 15.7740055,
+  "kind": "bus"
+ },
+ {
+  "name": "Kočí, hlavní silnice",
+  "lat": 49.9498982,
+  "lon": 15.8520681,
+  "kind": "bus"
+ },
+ {
+  "name": "Kočí, hlavní silnice",
+  "lat": 49.950257,
+  "lon": 15.8533621,
+  "kind": "bus"
+ },
+ {
+  "name": "Kočí, kostel",
+  "lat": 49.9468296,
+  "lon": 15.8549909,
+  "kind": "bus"
+ },
+ {
+  "name": "Kočí, kostel",
+  "lat": 49.9468455,
+  "lon": 15.8550895,
+  "kind": "bus"
+ },
+ {
+  "name": "Sobětuchy, Vrcha",
+  "lat": 49.9362088,
+  "lon": 15.767772,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Borzna",
+  "lat": 49.9476417,
+  "lon": 15.791576,
+  "kind": "bus"
+ },
+ {
+  "name": "Morašice",
+  "lat": 49.9341389,
+  "lon": 15.7078294,
+  "kind": "bus"
+ },
+ {
+  "name": "Morašice, Práchovna",
+  "lat": 49.9377461,
+  "lon": 15.7141507,
+  "kind": "bus"
+ },
+ {
+  "name": "Lány, horní",
+  "lat": 49.9418881,
+  "lon": 15.7199656,
+  "kind": "bus"
+ },
+ {
+  "name": "Lány, horní",
+  "lat": 49.9417697,
+  "lon": 15.7200086,
+  "kind": "bus"
+ },
+ {
+  "name": "Sobětuchy, Zavadilka",
+  "lat": 49.9389911,
+  "lon": 15.765789,
+  "kind": "bus"
+ },
+ {
+  "name": "Sobětuchy, Zavadilka",
+  "lat": 49.9391747,
+  "lon": 15.7656048,
+  "kind": "bus"
+ },
+ {
+  "name": "Sobětuchy, Markovická",
+  "lat": 49.9447846,
+  "lon": 15.761088,
+  "kind": "bus"
+ },
+ {
+  "name": "Sobětuchy, Markovická",
+  "lat": 49.9446285,
+  "lon": 15.7611194,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Průmyslová I",
+  "lat": 49.958515,
+  "lon": 15.7734601,
+  "kind": "bus"
+ },
+ {
+  "name": "Morašice, Janovice, horní",
+  "lat": 49.9120919,
+  "lon": 15.7136718,
+  "kind": "bus"
+ },
+ {
+  "name": "Bylany, hlavní silnice",
+  "lat": 49.956646,
+  "lon": 15.7330875,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, autobusové stanoviště",
+  "lat": 49.9490488,
+  "lon": 15.7866589,
+  "kind": "bus"
+ },
+ {
+  "name": "Bylany, hlavní silnice",
+  "lat": 49.9563904,
+  "lon": 15.7347717,
+  "kind": "bus"
+ },
+ {
+  "name": "Orel",
+  "lat": 49.9190818,
+  "lon": 15.8397666,
+  "kind": "bus"
+ },
+ {
+  "name": "Tuněchody",
+  "lat": 49.97906,
+  "lon": 15.8399115,
+  "kind": "bus"
+ },
+ {
+  "name": "Morašice",
+  "lat": 49.9341375,
+  "lon": 15.7080607,
+  "kind": "bus"
+ },
+ {
+  "name": "Morašice, Práchovna",
+  "lat": 49.9378122,
+  "lon": 15.7141272,
+  "kind": "bus"
+ },
+ {
+  "name": "Sobětuchy",
+  "lat": 49.9328578,
+  "lon": 15.76235,
+  "kind": "bus"
+ },
+ {
+  "name": "Sobětuchy",
+  "lat": 49.932844,
+  "lon": 15.7627127,
+  "kind": "bus"
+ },
+ {
+  "name": "Stolany, Na paloučku",
+  "lat": 49.9295316,
+  "lon": 15.7519919,
+  "kind": "bus"
+ },
+ {
+  "name": "Stolany, Na paloučku",
+  "lat": 49.9294595,
+  "lon": 15.7520396,
+  "kind": "bus"
+ },
+ {
+  "name": "Stolany, rybník",
+  "lat": 49.9309215,
+  "lon": 15.7444932,
+  "kind": "bus"
+ },
+ {
+  "name": "Stolany, rybník",
+  "lat": 49.9306297,
+  "lon": 15.7452127,
+  "kind": "bus"
+ },
+ {
+  "name": "Rozhovice, obecní úřad",
+  "lat": 49.9674858,
+  "lon": 15.7128834,
+  "kind": "bus"
+ },
+ {
+  "name": "Rozhovice, Doubrava",
+  "lat": 49.9599967,
+  "lon": 15.7004398,
+  "kind": "bus"
+ },
+ {
+  "name": "Třibřichy",
+  "lat": 49.9704405,
+  "lon": 15.7384449,
+  "kind": "bus"
+ },
+ {
+  "name": "Rozhovice, obecní úřad",
+  "lat": 49.9676299,
+  "lon": 15.7128497,
+  "kind": "bus"
+ },
+ {
+  "name": "Bylany, odb.",
+  "lat": 49.9602169,
+  "lon": 15.7312522,
+  "kind": "bus"
+ },
+ {
+  "name": "Třibřichy, host.",
+  "lat": 49.9657729,
+  "lon": 15.7368212,
+  "kind": "bus"
+ },
+ {
+  "name": "Dřenice",
+  "lat": 49.9830533,
+  "lon": 15.7456351,
+  "kind": "bus"
+ },
+ {
+  "name": "Dřenice",
+  "lat": 49.9829817,
+  "lon": 15.7454064,
+  "kind": "bus"
+ },
+ {
+  "name": "Orel",
+  "lat": 49.9145236,
+  "lon": 15.8421526,
+  "kind": "vlak"
+ },
+ {
+  "name": "Chrudim, dopravní terminál",
+  "lat": 49.9483493,
+  "lon": 15.7872764,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, dopravní terminál",
+  "lat": 49.9482169,
+  "lon": 15.7874025,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, autobusové stanoviště",
+  "lat": 49.9498964,
+  "lon": 15.7858162,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, autobusové stanoviště",
+  "lat": 49.9496828,
+  "lon": 15.7860284,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, autobusové stanoviště",
+  "lat": 49.9495771,
+  "lon": 15.7861336,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, autobusové stanoviště",
+  "lat": 49.949362,
+  "lon": 15.7863474,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, autobusové stanoviště",
+  "lat": 49.9492583,
+  "lon": 15.7864506,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, autobusové stanoviště",
+  "lat": 49.9491531,
+  "lon": 15.7865551,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, autobusové stanoviště",
+  "lat": 49.94979,
+  "lon": 15.7859219,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, autobusové stanoviště",
+  "lat": 49.9494696,
+  "lon": 15.786242,
+  "kind": "bus"
+ },
+ {
+  "name": "Slatiňany, Kunčí, odb.",
+  "lat": 49.900179,
+  "lon": 15.8253624,
+  "kind": "bus"
+ },
+ {
+  "name": "Nabočany",
+  "lat": 49.9434249,
+  "lon": 15.887592,
+  "kind": "bus"
+ },
+ {
+  "name": "Nabočany, odbočka",
+  "lat": 49.951512,
+  "lon": 15.8883737,
+  "kind": "bus"
+ },
+ {
+  "name": "Nabočany, odbočka",
+  "lat": 49.9515662,
+  "lon": 15.8874682,
+  "kind": "bus"
+ },
+ {
+  "name": "Kočí, OSEVA",
+  "lat": 49.9443584,
+  "lon": 15.8688463,
+  "kind": "bus"
+ },
+ {
+  "name": "Morašice, Holičky",
+  "lat": 49.9153637,
+  "lon": 15.7021726,
+  "kind": "bus"
+ },
+ {
+  "name": "Honbice",
+  "lat": 49.9337162,
+  "lon": 15.8928605,
+  "kind": "bus"
+ },
+ {
+  "name": "Morašice, Dubina",
+  "lat": 49.9280889,
+  "lon": 15.7134652,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Medlešice",
+  "lat": 49.9811672,
+  "lon": 15.7741925,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Medlešice",
+  "lat": 49.9807591,
+  "lon": 15.7739406,
+  "kind": "bus"
+ },
+ {
+  "name": "Rozhovice, Doubrava",
+  "lat": 49.9601892,
+  "lon": 15.7008447,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Vestec",
+  "lat": 49.9690246,
+  "lon": 15.8075809,
+  "kind": "bus"
+ },
+ {
+  "name": "Chrudim, Vestec",
+  "lat": 49.9691066,
+  "lon": 15.8073239,
+  "kind": "bus"
+ },
+ {
+  "name": "Honbice",
+  "lat": 49.9337697,
+  "lon": 15.8927238,
+  "kind": "bus"
+ },
+ {
+  "name": "Bylany, odb.",
+  "lat": 49.9599993,
+  "lon": 15.73164,
+  "kind": "bus"
+ },
+ {
+  "name": "Honbice - Libanice",
+  "lat": 49.9306783,
+  "lon": 15.8802876,
+  "kind": "bus"
+ },
+ {
+  "name": "Nemošice, točna",
+  "lat": 50.0086608,
+  "lon": 15.8084357,
+  "kind": "bus"
+ }
+]

@@ -1,0 +1,22 @@
+# Tajne udaje - lokalni konfigurace s API klicem (do gitu jde jen config.example.toml)
+config.toml
+.env
+.env.*
+
+# Data: databaze nascrapovanych nabidek a cache (vse se znovu vytvori aktualizaci).
+# Vyjimka: dataset zastavek z OpenStreetMap, ktery aplikace potrebuje ke dojizdeni.
+data/*
+!data/zastavky.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Nastroje / OS
+.claude/
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

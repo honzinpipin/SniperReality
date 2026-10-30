@@ -1,0 +1,381 @@
+:root{
+  --bg:#eef1f5; --card:#fff; --ink:#1c2430; --muted:#6a737f; --line:#e3e8ee;
+  --brand:#1f6feb; --brand-dk:#154fb0;
+  --high:#1a8f4a; --mid:#2f7dd1; --low:#b8860b; --poor:#98a2b0;
+  --ok:#1a8f4a; --warn:#c1121f; --chip:#eef2f6;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Roboto,system-ui,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.45}
+h1,h2,h3{margin:0}
+a{color:var(--brand);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ---------- Topbar ---------- */
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;
+  background:linear-gradient(90deg,#12233f,#1f6feb);color:#fff;padding:14px 22px}
+.brand h1{font-size:22px;letter-spacing:.3px}
+.brand .sub{font-size:12.5px;opacity:.85}
+.update-form button{background:#fff;color:var(--brand-dk);border:0;border-radius:8px;
+  padding:10px 18px;font-weight:700;cursor:pointer;font-size:14px}
+.update-form button:hover{background:#eaf1ff}
+.update-form button:disabled{opacity:.7;cursor:default}
+
+section{max-width:1080px;margin:16px auto;padding:0 18px}
+
+/* ---------- Zdroje ---------- */
+.sources{display:flex;flex-wrap:wrap;gap:8px}
+.src-chip{background:var(--card);border:1px solid var(--line);border-radius:20px;
+  padding:5px 12px;font-size:12.5px}
+.src-chip.ok{border-color:#bfe4cd}
+.src-chip.bad{border-color:#f0c2c2;background:#fdf0f0}
+.src-chip em{color:var(--muted);font-style:normal;margin-left:6px}
+
+/* ---------- Statistiky ---------- */
+.stats{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.stats h2{font-size:13px;color:var(--muted);font-weight:600;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px}
+.stat{background:#fafbfc;border:1px solid var(--line);border-radius:9px;padding:10px 12px;text-align:center}
+.stat b{display:block;font-size:17px}
+.stat span{font-size:11.5px;color:var(--muted)}
+.types{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px;color:var(--muted)}
+.type-badge{background:var(--chip);border-radius:6px;padding:3px 9px;font-size:12px;color:var(--ink)}
+
+/* ---------- Filtry ---------- */
+.filters form{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.filter-selects{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:16px}
+.filters label{display:flex;flex-direction:column;font-size:11.5px;color:var(--muted);gap:4px;text-transform:uppercase;letter-spacing:.3px}
+.filters select{border:1px solid var(--line);border-radius:7px;padding:8px 10px;font-size:14px;color:var(--ink);background:#fff;text-transform:none}
+
+/* Checkboxove filtry (vicenasobny vyber) */
+.filter-checks{display:flex;flex-wrap:wrap;gap:14px 20px;margin-bottom:16px;align-items:flex-start}
+.fgroup{border:1px solid var(--line);border-radius:9px;padding:6px 12px 9px;margin:0;min-width:0}
+.fgroup legend{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;padding:0 4px}
+.chk-row{display:flex;flex-wrap:wrap;gap:4px 14px}
+.chk{display:flex;align-items:center;gap:5px;font-size:13px;color:var(--ink);cursor:pointer;white-space:nowrap;text-transform:none;letter-spacing:0;flex-direction:row}
+.chk input{width:15px;height:15px;accent-color:var(--brand);cursor:pointer;margin:0}
+.sort-label{align-self:flex-end}
+.filter-ranges{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;
+  padding:14px 4px 4px;border-top:1px solid var(--line)}
+.filter-actions{display:flex;align-items:center;gap:14px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.filters button{background:var(--brand);color:#fff;border:0;border-radius:7px;padding:9px 18px;font-weight:600;cursor:pointer}
+.filters button:hover{background:var(--brand-dk)}
+.filters .reset{font-size:13px;color:var(--muted)}
+.count{margin-left:auto;font-size:13px;color:var(--muted)}
+
+/* ---------- Dvojity posuvnik ---------- */
+.range-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px}
+.range-head span{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.3px}
+.range-out{font-size:12.5px;color:var(--ink);font-weight:600}
+.range-track{position:relative;height:32px}
+.range-track::before{content:"";position:absolute;left:0;right:0;top:50%;height:5px;
+  transform:translateY(-50%);background:#dbe2ea;border-radius:4px}
+.range-fill{position:absolute;top:50%;height:5px;transform:translateY(-50%);
+  background:var(--brand);border-radius:4px}
+.range input[type=range]{position:absolute;top:0;left:0;width:100%;height:32px;margin:0;
+  background:none;-webkit-appearance:none;appearance:none;pointer-events:none}
+.range input[type=range]::-webkit-slider-runnable-track{background:none;border:none}
+.range input[type=range]::-moz-range-track{background:none;border:none}
+.range input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
+  pointer-events:all;width:18px;height:18px;border-radius:50%;background:#fff;
+  border:2px solid var(--brand);box-shadow:0 1px 3px rgba(0,0,0,.28);cursor:pointer;margin-top:-6.5px}
+.range input[type=range]::-moz-range-thumb{pointer-events:all;width:16px;height:16px;
+  border-radius:50%;background:#fff;border:2px solid var(--brand);box-shadow:0 1px 3px rgba(0,0,0,.28);cursor:pointer}
+
+/* ---------- Seznam ---------- */
+.list{max-width:1080px;margin:16px auto 40px;padding:0 18px;display:flex;flex-direction:column;gap:14px}
+.empty{background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:24px;text-align:center;color:var(--muted)}
+
+.card{display:grid;grid-template-columns:40px 200px 1fr;background:var(--card);
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;
+  box-shadow:0 1px 2px rgba(20,40,80,.04)}
+.col-rank{background:#fafbfc;border-right:1px solid var(--line);display:flex;justify-content:center;padding-top:14px}
+.rank{font-size:19px;font-weight:800;color:var(--muted)}
+.card.score-high{border-left:4px solid var(--high)}
+.card.score-mid{border-left:4px solid var(--mid)}
+.card.score-low{border-left:4px solid var(--low)}
+.card.score-poor{border-left:4px solid var(--poor)}
+
+.col-thumb{background:#eef1f4}
+.thumb{width:100%;height:100%}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block;min-height:100%}
+.thumb.no-img{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;height:100%;min-height:150px}
+
+.body{padding:14px 16px;min-width:0}
+
+/* Zahlavi */
+.card-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;
+  padding-bottom:10px;border-bottom:1px solid var(--line)}
+.head-left{min-width:0}
+.card-head h3{font-size:17px;line-height:1.3}
+.loc{font-size:12.5px;color:var(--muted);margin-top:3px}
+.score-badge{text-align:right;white-space:nowrap;flex:0 0 auto}
+.score-num b{font-size:26px;font-weight:800;line-height:1}
+.score-num span{color:var(--muted);font-size:12px}
+.score-badge .label{display:block;font-style:normal;font-size:11.5px;font-weight:700;margin-top:3px}
+.score-high .score-num b{color:var(--high)}  .label-high{color:var(--high)}
+.score-mid .score-num b{color:var(--mid)}    .label-mid{color:var(--mid)}
+.score-low .score-num b{color:var(--low)}    .label-low{color:var(--low)}
+.score-poor .score-num b{color:var(--poor)}  .label-poor{color:var(--poor)}
+
+/* Klicove udaje - mrizka */
+.keyfigures{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:9px;overflow:hidden;margin:12px 0}
+.kf{background:#fff;padding:9px 12px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.kf-label{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.kf-val{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kf-price .kf-val{color:var(--brand-dk)}
+
+/* Radky s popiskem */
+.row{display:flex;gap:10px;align-items:baseline;margin:7px 0}
+.row-label{flex:0 0 62px;color:var(--muted);font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;padding-top:3px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;flex:1;min-width:0}
+.chip{font-size:11.5px;border-radius:6px;padding:3px 9px;background:var(--chip);border:1px solid var(--line);white-space:nowrap}
+.chip.yes{background:#eaf7ef;border-color:#bfe4cd;color:#166b39}
+.chip.na{background:#f7f8fa;color:var(--muted)}
+.chip.val{background:#eef4ff;border-color:#cfe0ff;color:var(--brand-dk)}
+.chip.drop{background:#fff0e6;border-color:#ffd2b3;color:#b3541e}
+.chip.certainty{background:#fbf7ea;border-color:#eedeb3;color:#7a5c12}
+.chip.multi{background:#eef4ff;border-color:#cfe0ff;color:var(--brand-dk)}
+.chip.dupe{background:#fff6da;border-color:#f0e0a8;color:#8a6d1a}
+/* AI faktory z popisu (tvrzeni inzeratu, ne overena fakta) - skladaci rolldown */
+.ai-drop{margin:7px 0;border-top:1px dashed var(--line);padding-top:6px}
+.ai-drop>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;
+  font-size:12px;color:var(--muted);padding:2px 0;user-select:none}
+.ai-drop>summary::-webkit-details-marker{display:none}
+.ai-drop>summary::marker{content:""}
+.ai-drop>summary:hover .ai-drop-title{text-decoration:underline}
+.ai-drop-title{font-weight:600;color:var(--ink)}
+.ai-drop-count{color:var(--muted)}
+.ai-caret{margin-left:auto;transition:transform .15s ease;font-size:11px}
+.ai-drop[open] .ai-caret{transform:rotate(180deg)}
+/* Explicitni rizeni viditelnosti - nativni skryvani <details> lze prebit display:flex
+   na primem potomku, proto radime sami. */
+.ai-factors{flex-wrap:wrap;gap:6px;min-width:0;margin:6px 0 2px}
+.ai-drop:not([open]) .ai-factors{display:none}
+.ai-drop[open] .ai-factors{display:flex}
+.afac{font-size:11.5px;border-radius:6px;padding:3px 9px;border:1px solid var(--line);
+  background:var(--chip);white-space:nowrap;cursor:help}
+.afac b{font-weight:600}
+.afac-plus{background:#eaf7ef;border-color:#bfe4cd;color:#166b39}
+.afac-minus{background:#fdecec;border-color:#f3c6c6;color:#a3302a}
+.afac-zero{background:#f4f6f8;border-color:var(--line);color:var(--ink)}
+.afac-warn{background:#fff4da;border-color:#f0dca0;color:#8a5a11;font-weight:600}
+.afac-na{background:#f7f8fa;border-color:var(--line);color:var(--muted);font-style:italic}
+/* Cenova kotva vuci srovnatelnym nabidkam (hlavni hodnoceni bytu/domu) */
+.ocen{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:8px 0;padding:7px 10px;
+  border:1px solid var(--line);border-left:4px solid var(--muted);border-radius:8px;background:#fafbfc;font-size:12px}
+.ocen-low{border-left-color:#2f9e57;background:#f2faf5}
+.ocen-high{border-left-color:#c1121f;background:#fdf4f4}
+.ocen-mid{border-left-color:#8a8f98}
+.ocen-na{border-left-color:var(--line)}
+.ocen-verdict{font-weight:700;font-size:13px;color:var(--ink)}
+.ocen-low .ocen-verdict{color:#1c7d43}
+.ocen-high .ocen-verdict{color:#a3302a}
+.ocen-verdict b{font-weight:800}
+.ocen-base,.ocen-range{color:var(--muted)}
+.ocen-range{padding-left:8px;border-left:1px solid var(--line)}
+.ocen-cert{margin-left:auto;font-size:11px;border-radius:6px;padding:2px 8px;white-space:nowrap}
+.cert-vys{background:#eaf7ef;border:1px solid #bfe4cd;color:#166b39}
+.cert-str{background:#fbf7ea;border:1px solid #eedeb3;color:#7a5c12}
+.cert-niz{background:#f3f4f6;border:1px solid var(--line);color:var(--muted)}
+.ocen-caveat{flex-basis:100%;color:#8a5a11;font-size:11px}
+/* Faktory jako vysvetleni odchylky od kotvy */
+.vyklad{margin:-2px 0 8px;font-size:12px}
+.vyklad-text{margin:0 0 6px;color:var(--ink);line-height:1.4}
+.vyklad-cols{display:flex;flex-wrap:wrap;gap:14px}
+.vyklad-col{display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-width:0}
+.vc-head{font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;font-weight:700}
+.vc-plus .vc-head{color:#1c7d43}
+.vc-minus .vc-head{color:#a3302a}
+.vc-item{font-style:normal;border-radius:6px;padding:2px 8px;font-size:11.5px;cursor:help}
+.vc-plus .vc-item{background:#eaf7ef;border:1px solid #bfe4cd;color:#166b39}
+.vc-minus .vc-item{background:#fdecec;border:1px solid #f3c6c6;color:#a3302a}
+/* Varovani na vazna rizika (M) - snizuje jistotu kotvy */
+.riziko{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 8px;padding:6px 10px;
+  border:1px solid #f0cfa0;border-left:4px solid #d98a1f;border-radius:8px;background:#fdf6e9;font-size:12px}
+.riziko-head{font-weight:700;color:#8a5a11;white-space:nowrap}
+.riziko-item{background:#fff4da;border:1px solid #f0dca0;border-radius:6px;padding:2px 8px;
+  color:#8a5a11;font-weight:600;cursor:help}
+.riziko-note{color:#8a6d3a;font-size:11px}
+/* Souhrnne oduvodneni (skladaci sekce) */
+.odu-drop[open] .ai-caret{transform:rotate(180deg)}
+.odu-drop:not([open]) .odu-body{display:none}
+.odu-body{margin:6px 0 2px;font-size:12px}
+.odu-list{margin:4px 0;padding-left:18px}
+.odu-list li{margin:2px 0;line-height:1.4}
+.odu-omezeni{margin-top:8px;padding-top:6px;border-top:1px dashed var(--line)}
+.odu-omezeni-head{font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;font-weight:700;color:var(--muted)}
+.odu-muted li{color:var(--muted)}
+/* Vzhled z fotek (AI_INFERENCE - odhad, ne fakt) */
+.vzhled{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:8px 0;padding:6px 10px;
+  border:1px solid #d9d2ec;border-left:4px solid #7c5cbf;border-radius:8px;background:#f7f5fc;font-size:12px}
+.vzhled-icon{font-size:13px}
+.vzhled-lbl{color:var(--muted)}
+.vzhled-val{font-weight:700;border-radius:6px;padding:2px 8px}
+.vzhled-mod{background:#eaf7ef;color:#166b39}
+.vzhled-str{background:#fbf3e2;color:#8a5a11}
+.vzhled-zas{background:#f0eef4;color:#5b4a7a}
+.vzhled-duvod{color:var(--muted);font-style:italic;min-width:0}
+.vzhled-ai{margin-left:auto;font-size:10px;text-transform:uppercase;letter-spacing:.4px;
+  color:#7c5cbf;border:1px solid #d9d2ec;border-radius:6px;padding:1px 6px;white-space:nowrap;cursor:help}
+/* Skore atraktivity (orientacni poradi bytu/domu) */
+.card-head{gap:8px;align-items:flex-start}
+.skore{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-width:46px;padding:3px 8px;border-radius:8px;border:1px solid var(--line);background:#f4f6f8;cursor:help}
+.skore span{font-size:8.5px;letter-spacing:.5px;color:var(--muted);text-transform:uppercase}
+.skore b{font-size:18px;line-height:1;font-weight:800}
+.skore-vys{background:#eaf7ef;border-color:#bfe4cd}.skore-vys b{color:#166b39}
+.skore-zaj{background:#eef4ff;border-color:#cfe0ff}.skore-zaj b{color:#1f5fbf}
+.skore-bez{background:#f4f6f8}.skore-bez b{color:var(--ink)}
+.skore-niz{background:#faf0f0;border-color:#f0d5d5}.skore-niz b{color:#a3302a}
+.skore-rozpis{margin:2px 0 8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fafbfc}
+.sr-head{font-size:12px;margin-bottom:5px}
+.sr-cert{color:var(--muted);font-weight:400}
+.sr-tab{width:100%;border-collapse:collapse;font-size:11.5px}
+.sr-tab td{padding:2px 4px;vertical-align:top;border-top:1px solid var(--line)}
+.sr-tab td.sr-b{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:600;width:62px}
+.sr-tab td.sr-p{color:var(--muted)}
+.sr-bonus td{color:#166b39}
+.sr-pen td{color:#a3302a}
+.sr-note{margin-top:6px;font-size:10.5px;color:var(--muted);font-style:italic}
+/* Dojizdeni: lista s cilovou zastavkou + radek dopravy v karte */
+.dojezd{display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+  background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 16px}
+.dojezd-icon{font-size:16px}
+.dojezd-lbl{font-weight:600;font-size:13px}
+.dojezd-input{padding:6px 10px;border:1px solid var(--line);border-radius:8px;font-size:13px;min-width:220px;background:var(--bg)}
+.dojezd-note{font-size:12px;color:var(--brand-dk);font-weight:600}
+.dojezd-help{flex-basis:100%;font-size:11.5px;color:var(--muted)}
+.doprava{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:7px 0;font-size:12px}
+.dopr-icon{font-size:13px}
+.dopr-stop{font-weight:600}
+.dopr-walk{color:var(--muted)}
+.dopr-idos{font-weight:600;background:#eef4ff;border:1px solid #cfe0ff;color:var(--brand-dk);
+  border-radius:6px;padding:3px 9px;white-space:nowrap}
+.dopr-hint{color:var(--muted);font-style:italic;font-size:11.5px}
+.src-link{font-weight:600;font-size:12.5px;background:#f3f7ff;border:1px solid #d6e4ff;
+  border-radius:6px;padding:3px 9px;white-space:nowrap}
+.src-link:hover{background:#e6eeff;text-decoration:none}
+
+/* Paticka karty */
+.card-foot{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:10px;
+  padding-top:9px;border-top:1px solid var(--line);font-size:12px}
+.status{border-radius:5px;padding:2px 8px;font-weight:600}
+.status-ok{background:#eaf7ef;color:#166b39}
+.status-warn{background:#fdf0f0;color:var(--warn)}
+.checked{color:var(--muted)}
+.diffs{color:var(--muted);margin-left:auto}
+
+/* Oduvodneni */
+.reason{margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
+.reason summary{cursor:pointer;font-size:13px;color:var(--brand-dk);font-weight:600}
+.reason-body{margin-top:10px;font-size:13.5px}
+.reason .zarazeni{font-weight:600}
+.rlabel{margin:9px 0 2px;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.4px}
+.reason ul{margin:0;padding-left:20px}
+.reason ul.limits li{color:#8a6d1a}
+.certline{margin-top:8px}
+.breakdown{width:100%;border-collapse:collapse;margin-top:10px;font-size:12.5px}
+.breakdown th,.breakdown td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
+.breakdown th{background:#fafbfc;color:var(--muted)}
+
+/* Graf ČSÚ – vývoj realizovaných cen */
+.csu{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.csu h2{font-size:14px;color:var(--ink);font-weight:700;margin-bottom:10px}
+.csu-box{width:100%;overflow-x:auto;position:relative}
+.csu-chart{width:100%;height:auto;display:block}
+.csu-chart .cx{font-size:11px;fill:var(--muted)}
+.csu-chart .cy{font-size:11px;fill:var(--muted)}
+.csu-chart .cyunit{font-size:9px;fill:var(--muted);text-transform:uppercase;letter-spacing:.3px}
+.csu-chart .clast{font-size:12px;font-weight:800}
+.csu-chart .cg{stroke:var(--line);stroke-width:1;stroke-dasharray:3 3}
+.csu-chart .csu-hz{cursor:crosshair}
+.csu-chart .csu-dot{transition:r .08s ease}
+.csu-chart .csu-dot.on{r:6}
+.csu-tip{position:absolute;transform:translateX(-50%);background:#1c2430;color:#fff;font-size:12px;
+  font-weight:600;padding:4px 9px;border-radius:6px;white-space:nowrap;pointer-events:none;z-index:6;
+  box-shadow:0 2px 8px rgba(20,40,80,.25)}
+.csu-src{font-size:11.5px;color:var(--muted);margin-top:8px}
+
+footer{max-width:1080px;margin:0 auto 30px;padding:0 18px;color:var(--muted);font-size:12px}
+
+/* ---------- Zpetny odkaz v topbaru ---------- */
+.brand .back{display:block;color:#dce6f7;font-size:12px;margin-bottom:2px}
+.brand .back:hover{color:#fff}
+
+/* ---------- Rozcestnik ---------- */
+.hero{text-align:center;margin-top:26px}
+.hero h2{font-size:22px}
+.hero-sub{color:var(--muted);margin:6px 0 22px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;max-width:1000px;margin:0 auto}
+.tile{display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--card);
+  border:1px solid var(--line);border-radius:14px;padding:24px 16px;color:var(--ink);
+  box-shadow:0 1px 3px rgba(20,40,80,.05);transition:transform .1s,box-shadow .1s;border-top:4px solid var(--brand)}
+.tile:hover{text-decoration:none;transform:translateY(-3px);box-shadow:0 6px 18px rgba(20,40,80,.12)}
+.tile-pozemky{border-top-color:#1a8f4a}
+.tile-byty{border-top-color:#1f6feb}
+.tile-domy{border-top-color:#b8860b}
+.tile-ikona{font-size:34px;line-height:1}
+.tile-nazev{font-size:19px;font-weight:800;margin-top:6px}
+.tile-podnazev{font-size:13px;color:var(--muted)}
+.tile-count{margin-top:10px;font-size:22px;font-weight:800;color:var(--brand-dk)}
+.tile-count em{display:block;font-style:normal;font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.landing-sources{justify-content:center;margin-top:30px}
+.src-summary{width:100%;text-align:center;color:var(--muted);font-size:12.5px;margin-bottom:8px}
+
+/* ---------- PENB odznak ---------- */
+.penb{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:52px;height:52px;border-radius:9px;color:#fff;line-height:1}
+.penb span{font-size:8.5px;letter-spacing:.5px;opacity:.9}
+.penb b{font-size:22px;font-weight:800}
+.penb-A{background:#1a8f4a}.penb-B{background:#4bab3a}.penb-C{background:#8fbf2f}
+.penb-D{background:#e0b400;color:#3a2f00}.penb-E{background:#e58a1a}
+.penb-F{background:#e0561a}.penb-G{background:#c1121f}
+.penb-na{background:#e7ebf0;color:#98a2b0;border:1px dashed #c7cfda}
+
+/* ---------- Byty/domy: cena + energie ---------- */
+/* Nemovitosti: box s nájmem/cenou pres celou sirku a vetsim pismem,
+   pod nim kompaktni radek dispozice/plocha/cena za m2. */
+.kf-nemovitost{grid-template-columns:repeat(3,1fr)}
+.kf-nemovitost .kf-price{grid-column:1 / -1;gap:2px;padding:12px 14px}
+.kf-nemovitost .kf-price .kf-val{font-size:23px;white-space:normal}
+.kf-nemovitost .kf:not(.kf-price){padding:7px 10px}
+.kf-nemovitost .kf:not(.kf-price) .kf-label{font-size:9.5px}
+.kf-nemovitost .kf:not(.kf-price) .kf-val{font-size:13px;font-weight:600}
+.kf-costs{font-size:12.5px;color:var(--muted);margin-top:4px}
+.kf-costs b{color:var(--ink);font-weight:700}
+.kf-costs em{font-style:normal;color:#b3541e}
+.kf-total{font-size:15px;font-weight:800;color:var(--brand-dk);margin-top:4px}
+.energy-hint{font-size:12px;color:var(--muted);background:#fbf7ea;border:1px solid #eedeb3;
+  border-radius:7px;padding:6px 10px;margin:8px 0}
+.ai-tag{display:inline-block;margin-left:6px;font-size:9.5px;font-weight:700;letter-spacing:.3px;
+  text-transform:uppercase;background:#ece7fb;color:#5b3fb5;border:1px solid #d6cbf5;
+  border-radius:5px;padding:1px 5px;vertical-align:middle}
+
+/* Lama ikonka - energie dohledane AI */
+.kf-price{position:relative}
+.llama-icon{position:absolute;right:8px;bottom:6px;width:24px;height:24px;opacity:.92}
+.kf-price .kf-energy{padding-right:30px}   /* misto pro ikonku vpravo dole */
+.llama-icon.inline{position:static;width:18px;height:18px;vertical-align:-4px;margin:0 1px}
+
+/* Stavovy pruh AI */
+.ai-status{max-width:1080px;margin:12px auto 0;padding:9px 14px;border-radius:10px;font-size:13px;
+  display:flex;align-items:center;gap:8px;border:1px solid var(--line)}
+.ai-status.on{background:#f3f0fc;border-color:#d6cbf5;color:#4a3595}
+.ai-status.off{background:#f7f8fa;color:var(--muted)}
+.ai-status .ai-tag{margin-left:0}
+.ai-dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+.ai-status.on .ai-dot{background:#6f42c1;box-shadow:0 0 0 3px rgba(111,66,193,.18)}
+.ai-status.off .ai-dot{background:#b6bec9}
+
+/* ---------- Responsivita ---------- */
+@media(max-width:820px){
+  .filter-ranges{grid-template-columns:1fr;gap:16px}
+}
+@media(max-width:720px){
+  .card{grid-template-columns:1fr}
+  .col-rank{display:none}
+  .col-thumb{max-height:180px}
+  .keyfigures{grid-template-columns:repeat(2,1fr)}
+  .diffs{margin-left:0}
+}

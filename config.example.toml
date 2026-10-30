@@ -1,0 +1,134 @@
+# ============================================================================
+# Sniper Chrudim - konfigurace (light prototyp)
+# ----------------------------------------------------------------------------
+# Vsechny nastavitelne hranice a vahy jsou zde, nikoli natvrdo v kodu.
+# Soubor je cten pri kazdem behu aktualizace i pri startu serveru.
+# ============================================================================
+
+[lokalita]
+# Sledujeme POUZE mesto Chrudim + jeho casti (Chrudim I-IV).
+nazev = "Chrudim"
+# Sreality: hledame v celem okrese a filtrujeme na obec Chrudim (vc. casti).
+sreality_okres_id = 29          # locality_district_id pro okres Chrudim
+sreality_obec_id = 2248         # municipality_id obce Chrudim (vc. casti Chrudim I-IV, Medlesice...)
+sreality_mesto = "Chrudim"      # zaloha: filtr podle locality.city
+# iDNES: slug mesta v okrese (mesto-okres).
+idnes_slug = "chrudim-chrudim"
+# Bezrealitky: OSM relation id mesta Chrudim (R439959).
+bezrealitky_osm_id = "R439959"
+
+[sit]
+# Sitove chovani scraperu - setrne, jednou denne.
+user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+timeout_s = 25
+prodleva_mezi_dotazy_s = 0.8    # zdvorila prodleva mezi HTTP dotazy
+max_stranek = 5                 # pojistka proti nekonecnemu strankovani
+
+[stav]
+# Po kolika dnech bez nalezeni oznacit nabidku jako "pravdepodobne stazeno".
+dny_do_pravdepodobne_stazeno = 3
+
+[ai]
+# Master vypinac vsech AI kroku. Kdyz false, aplikace bezi ciste na regexu/pravidlech.
+# Lokalni Ollama slouzi jako ZALOHA (dohledani ceny energii; fallback pro faktory).
+#   Instalace:  https://ollama.com  ->  ollama pull llama3.2:3b  ->  ollama serve
+enabled = true
+endpoint = "http://localhost:11434"
+model = "llama3.2:3b"       # maly model staci; jde jen o cteni textu
+timeout_s = 30              # limit na jeden dotaz
+max_za_beh = 80            # max poctu bytu dotazanych na jeden beh (setrnost)
+
+[ai.openai]
+# PRIMARNI model pro extrakci faktoru z popisu bytu/domu. Kdyz selze nebo neni
+# nastaveny klic, automaticky se pouzije lokalni Ollama (fallback).
+# Klic se cte HLAVNE z promenne prostredi OPENAI_API_KEY (bezpecnejsi nez do souboru);
+# pole api_key nize je jen zaloha, kdyz promennou nechces nastavovat.
+enabled = true
+api_key = ""                       # nechat prazdne -> cte se z env OPENAI_API_KEY
+base_url = "https://api.openai.com/v1"
+model = "gpt-5.6-luna"             # overit, ze model podporuje Structured Outputs (JSON schema)
+timeout_s = 45
+
+[ai.faktory]
+# Extrakce strukturovanych faktoru z popisu bytu/domu. AI POUZE cte text a vraci
+# hodnoty s doslovnou citaci; impact (smer vlivu na cenu) prideluje kod. Bez citace
+# doslovne prokazatelne v textu se faktor zahodi (ochrana proti halucinaci).
+enabled = true
+max_za_beh = 40            # max inzeratu zpracovanych na jeden beh (setrnost ke kreditum)
+# Lokalni model pro fallback extrakci faktoru. Prazdne = pouzije se hlavni [ai] model
+# (llama3.2:3b), ktery zde davat doslovne citace, takze citacni pojistka funguje dobre.
+# Lze nastavit i vetsi model (napr. "qwen2.5:7b"), ale neni nutny - primarni je stejne OpenAI.
+ollama_model = ""
+
+[ai.vzhled]
+# Posouzeni vizualni modernosti interieru z fotek (moderni/stredne moderni/zastarale).
+# Bezi na pozadi pri aktualizaci (jako faktory), vysledek se cachuje - stranku nezpomali.
+# Jen OpenAI (vision); bez klice se krok tise preskoci. Origin je AI_INFERENCE (odhad z fotky),
+# NEvstupuje do cenoveho verdiktu - je to jen informativni stitek.
+enabled = true
+pocet_fotek = 10           # kolik prvnich fotek z galerie poslat modelu
+max_za_beh = 40            # max inzeratu posouzenych na jeden beh (vision je drazsi)
+
+[plocha]
+# Hranice velikosti pozemku v m2 (nastavitelne).
+maly_do = 400          # < 400 m2  = maly
+velky_od = 1500        # >= 1500 m2 = velky
+# mezi tim = stredni
+
+[cena_pasma]
+# Nasobky medianu ceny za m2 pro slovni zarazeni (podhodnoceni/nadhodnoceni).
+levnejsi_pod = 0.90    # pm2 < 0.90 * median  -> levnejsi nez srovnatelne
+drazsi_nad = 1.10      # pm2 > 1.10 * median  -> drazsi nez srovnatelne
+# Podezrele nizka cena/m2 u stavebnich/komercnich pozemku (napr. cena za m2,
+# spoluvlastnicky podil, drazba) - pod timto nasobkem medianu tridy se nabidka
+# oznaci jako nespolehliva (nizka jistota, neboduje se jako super levna).
+podezrele_pod = 0.15
+# Minimalni pocet srovnatelnych nabidek ve tride, aby se pouzil median tridy.
+min_srovnatelnych = 3
+
+[skore_vahy]
+# Maximalni body jednotlivych kriterii (soucet = 100).
+cena_za_m2 = 40
+celkova_cena = 15
+typ_pozemku = 15
+plocha = 10
+site = 10
+historie = 10
+
+[skore_typ]
+# Body za typ pozemku (v ramci vahy 'typ_pozemku'). Nastavitelne.
+stavebni = 15
+bydleni = 15
+komercni = 10
+zahrada = 8
+zemedelsky = 5
+ostatni = 4
+neuvedeno = 6
+
+[skore_plocha]
+# Body za velikost (v ramci vahy 'plocha').
+maly = 6
+stredni = 10
+velky = 8
+
+[hodnoceni_prahy]
+# Hranice skore pro slovni hodnoceni.
+velmi_zajimava = 80
+zajimava = 60
+bezna = 40
+# pod 'bezna' = mene zajimava nabidka
+
+[byty_skore_vahy]
+# Skore ATRAKTIVITY bytu/domu (0-100) = orientacni poradi, NE oceneni.
+# Zaklad se scita do 100; vzhled je jen bonus navic, riziko odecet. Vysledek se orizne 0-100.
+cena_vs_srovnatelne = 50   # jadro - levnejsi nez srovnatelne = vic bodu
+vlastnosti = 25            # net dolozenych faktoru z popisu
+penb = 15                  # A=plno ... G=0, neznamo=polovina
+historie = 10              # zlevneni / doba v nabidce
+vzhled_bonus = 5           # BONUS za vzhled z fotek (moderni=+5, stredne=+2) - maly, AI se muze mylit
+riziko_penalty = 10        # odecet za vazne riziko M (vlhkost/plisen apod.)
+
+[deduplikace]
+# Nabidky z RUZNYCH zdroju se spoji do jednoho zaznamu pouze pri PRESNE shode
+# celkove ceny i vymery. Zadne tolerance ani GPS blizkost se nepouzivaji, aby se
+# nespojovaly ruzne sousedni pozemky s pouze podobnou cenou/vymerou.

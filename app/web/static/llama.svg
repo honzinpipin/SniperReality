@@ -1,0 +1,16 @@
+<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none"
+     stroke="#6f42c1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <!-- usi -->
+  <path d="M23 18 Q20 8 22.5 6 Q26 9 27 17 Z"/>
+  <path d="M41 18 Q44 8 41.5 6 Q38 9 37 17 Z"/>
+  <!-- oblicej -->
+  <path d="M23 16 Q17 22 17 32 Q17 44 24 49 Q28 52 32 52 Q36 52 40 49 Q47 44 47 32 Q47 22 41 16"/>
+  <!-- cenich -->
+  <path d="M26 39 Q26 34 32 34 Q38 34 38 39 Q38 46 32 46 Q26 46 26 39 Z"/>
+  <!-- nozdry -->
+  <circle cx="29.5" cy="39.5" r="1.2" fill="#6f42c1" stroke="none"/>
+  <circle cx="34.5" cy="39.5" r="1.2" fill="#6f42c1" stroke="none"/>
+  <!-- oci -->
+  <circle cx="25.5" cy="28" r="1.4" fill="#6f42c1" stroke="none"/>
+  <circle cx="38.5" cy="28" r="1.4" fill="#6f42c1" stroke="none"/>
+</svg>

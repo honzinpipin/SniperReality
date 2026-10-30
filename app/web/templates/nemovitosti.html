@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ kat_popis }} – {{ nab_popis }} | Sniper Chrudim</title>
+  <link rel="stylesheet" href="/static/style.css?v={{ asset_ver() }}">
+  <script src="/static/app.js?v={{ asset_ver() }}" defer></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <a class="back" href="/">← Rozcestník</a>
+    <h1>{{ kat_popis }} – {{ nab_popis }}</h1>
+    <span class="sub">Chrudim – interní light prototyp</span>
+  </div>
+  <form method="post" action="/aktualizovat" class="update-form"
+        onsubmit="this.querySelector('button').disabled=true; this.querySelector('button').textContent='Aktualizuji…';">
+    <input type="hidden" name="category" value="{{ category }}">
+    <input type="hidden" name="offer_type" value="{{ offer_type }}">
+    <button type="submit">Aktualizovat {{ kat_popis|lower }} – {{ nab_popis }}</button>
+  </form>
+</header>
+
+<!-- Stav zdroju -->
+<section class="sources">
+  {% if runs %}
+    {% for r in runs %}
+      <span class="src-chip {{ 'ok' if r['status']=='ok' else 'bad' }}">
+        {{ zdroje_nazvy.get(r['source'], r['source']) }}:
+        {% if r['status']=='ok' %}{{ r['found'] }} nabídek{% else %}nedostupný{% endif %}
+        <em>{{ r['finished_at'][:16].replace('T',' ') }}</em>
+      </span>
+    {% endfor %}
+  {% else %}
+    <span class="src-chip">Zatím bez dat – klikněte na <strong>Aktualizovat</strong>.</span>
+  {% endif %}
+</section>
+
+<!-- Stav AI pro dohledani energii (jen u pronajmu) -->
+{% if ai_status %}
+<section class="ai-status {{ 'on' if ai_status.available else 'off' }}">
+  {% if ai_status.available %}
+    <span class="ai-dot"></span> Lokální AI <b>{{ ai_status.model }}</b> (Ollama) je aktivní.
+    Náklady na bydlení dohledány v popisu u <b>{{ ai_status.filled }}</b> {% if ai_status.filled == 1 %}nabídky{% else %}nabídek{% endif %}
+    – poznáte je podle ikonky <img class="llama-icon inline" src="/static/llama.svg" alt="lama">.
+  {% else %}
+    <span class="ai-dot"></span> Lokální AI (Ollama) <b>neběží</b> – u nabídek, kde cena energií není v ceně,
+    zůstává „neuvedeno". Dohledání energií z popisu se zapne po spuštění Ollamy (viz README).
+    {% if ai_status.filled %} Dříve dohledáno u {{ ai_status.filled }} nabídek.{% endif %}
+  {% endif %}
+</section>
+{% endif %}
+
+<!-- Statistiky -->
+<section class="stats">
+  <h2>{{ kat_popis }} – {{ nab_popis }} – přehled</h2>
+  <div class="stat-grid">
+    <div class="stat"><b>{{ stats.pocet_aktivnich }}</b><span>aktivních nabídek</span></div>
+    <div class="stat"><b>{% if je_pronajem %}{{ stats.cena_prumer|kc_mes }}{% else %}{{ stats.cena_prumer|kc }}{% endif %}</b><span>průměr {{ 'nájmu' if je_pronajem else 'ceny' }}</span></div>
+    <div class="stat"><b>{{ stats.pm2_median|pm2 }}</b><span>medián ceny/m²</span></div>
+    <div class="stat"><b>{{ stats.pm2_min|pm2 }}</b><span>nejnižší cena/m²</span></div>
+    <div class="stat"><b>{{ stats.pm2_max|pm2 }}</b><span>nejvyšší cena/m²</span></div>
+    <div class="stat"><b>{{ stats.vymera_prumer|m2 }}</b><span>průměrná plocha</span></div>
+  </div>
+  {% if stats.pocet_dle_dispozice %}
+  <div class="types">
+    <span>Podle dispozice:</span>
+    {% for d, n in stats.pocet_dle_dispozice.items() %}
+      <span class="type-badge">{{ d }}: {{ n }}</span>
+    {% endfor %}
+  </div>
+  {% endif %}
+</section>
+
+<!-- Vyvoj realizovanych cen (CSU) -->
+{% if csu_chart %}
+<section class="csu">
+  <h2>Vývoj cen v okrese Chrudim – {{ 'byty' if csu_chart.kind=='byty' else 'rodinné domy' }} (realizované prodeje)</h2>
+  <div class="csu-box">
+    {{ csu_chart.svg|safe }}
+  </div>
+  <p class="csu-src">Kč/m² podle roku. Zdroj: <a href="{{ csu_chart.url }}" target="_blank" rel="noopener">{{ csu_chart.source }}</a>.
+  Jde o <strong>skutečné realizované</strong> ceny za okres Chrudim (roční data), aktualizováno {{ csu_chart.fetched }}.</p>
+</section>
+{% endif %}
+
+<!-- Filtry -->
+<section class="filters">
+  <form method="get" action="/{{ category }}/{{ offer_type }}">
+    <input type="hidden" name="fsubmit" value="1">
+    <div class="filter-checks">
+      {% if dispozice_moznosti %}
+      <fieldset class="fgroup">
+        <legend>Dispozice</legend>
+        <div class="chk-row">
+          {% for d in dispozice_moznosti %}
+            <label class="chk"><input type="checkbox" name="dispozice" value="{{ d }}" {{ 'checked' if d in filtr.dispozice }}> {{ d }}</label>
+          {% endfor %}
+        </div>
+      </fieldset>
+      {% endif %}
+      {% if penb_moznosti %}
+      <fieldset class="fgroup">
+        <legend>Energ. třída</legend>
+        <div class="chk-row">
+          {% for p in penb_moznosti %}
+            <label class="chk"><input type="checkbox" name="penb" value="{{ p }}" {{ 'checked' if p in filtr.penb }}> {{ p }}</label>
+          {% endfor %}
+        </div>
+      </fieldset>
+      {% endif %}
+      <fieldset class="fgroup">
+        <legend>Zdroj</legend>
+        <div class="chk-row">
+          {% for k, nazev in zdroje_nazvy.items() %}
+            <label class="chk"><input type="checkbox" name="zdroj" value="{{ k }}" {{ 'checked' if k in filtr.zdroj }}> {{ nazev }}</label>
+          {% endfor %}
+        </div>
+      </fieldset>
+      <fieldset class="fgroup">
+        <legend>Stav</legend>
+        <div class="chk-row">
+          <label class="chk"><input type="checkbox" name="stav" value="aktivni" {{ 'checked' if 'aktivni' in filtr.stav }}> aktivní</label>
+          <label class="chk"><input type="checkbox" name="stav" value="neovereno" {{ 'checked' if 'neovereno' in filtr.stav }}> neověřené</label>
+        </div>
+      </fieldset>
+      <label class="sort-label">Řadit podle
+        {% set cena_low = 'nájem – od nejnižšího' if je_pronajem else 'cena – od nejnižší' %}
+        {% set cena_high = 'nájem – od nejvyššího' if je_pronajem else 'cena – od nejvyšší' %}
+        <select name="sort">
+          {% for k, popis in [
+              ("skore","skóre atraktivity – od nejvyššího"),
+              ("cena_m2_asc","cena za m² – od nejnižší"),
+              ("cena_m2_desc","cena za m² – od nejvyšší"),
+              ("cena_asc", cena_low),
+              ("cena_desc", cena_high),
+              ("plocha_asc","plocha – od nejmenší"),
+              ("plocha_desc","plocha – od největší"),
+              ("nejnovejsi","nejnovější")] %}
+            <option value="{{ k }}" {{ 'selected' if sort==k }}>{{ popis }}</option>
+          {% endfor %}
+        </select>
+      </label>
+    </div>
+
+    <div class="filter-ranges">
+      <div class="range" data-unit="{{ 'Kč/měs' if je_pronajem else 'Kč' }}" data-min="{{ bounds.cena.min }}" data-max="{{ bounds.cena.max }}" data-step="{{ bounds.cena.step }}">
+        <div class="range-head"><span>{{ 'Nájem' if je_pronajem else 'Cena' }}</span><output class="range-out"></output></div>
+        <div class="range-track">
+          <div class="range-fill"></div>
+          <input type="range" class="range-min" name="cena_min" min="{{ bounds.cena.min }}" max="{{ bounds.cena.max }}" step="{{ bounds.cena.step }}" value="{{ filtr.cena_min or bounds.cena.min }}">
+          <input type="range" class="range-max" name="cena_max" min="{{ bounds.cena.min }}" max="{{ bounds.cena.max }}" step="{{ bounds.cena.step }}" value="{{ filtr.cena_max or bounds.cena.max }}">
+        </div>
+      </div>
+      <div class="range" data-unit="m²" data-min="{{ bounds.plocha.min }}" data-max="{{ bounds.plocha.max }}" data-step="{{ bounds.plocha.step }}">
+        <div class="range-head"><span>Plocha</span><output class="range-out"></output></div>
+        <div class="range-track">
+          <div class="range-fill"></div>
+          <input type="range" class="range-min" name="plocha_min" min="{{ bounds.plocha.min }}" max="{{ bounds.plocha.max }}" step="{{ bounds.plocha.step }}" value="{{ filtr.plocha_min or bounds.plocha.min }}">
+          <input type="range" class="range-max" name="plocha_max" min="{{ bounds.plocha.min }}" max="{{ bounds.plocha.max }}" step="{{ bounds.plocha.step }}" value="{{ filtr.plocha_max or bounds.plocha.max }}">
+        </div>
+      </div>
+      <div class="range" data-unit="Kč/m²" data-min="{{ bounds.pm2.min }}" data-max="{{ bounds.pm2.max }}" data-step="{{ bounds.pm2.step }}">
+        <div class="range-head"><span>Cena za m²</span><output class="range-out"></output></div>
+        <div class="range-track">
+          <div class="range-fill"></div>
+          <input type="range" class="range-min" name="pm2_min" min="{{ bounds.pm2.min }}" max="{{ bounds.pm2.max }}" step="{{ bounds.pm2.step }}" value="{{ filtr.pm2_min or bounds.pm2.min }}">
+          <input type="range" class="range-max" name="pm2_max" min="{{ bounds.pm2.min }}" max="{{ bounds.pm2.max }}" step="{{ bounds.pm2.step }}" value="{{ filtr.pm2_max or bounds.pm2.max }}">
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-actions">
+      <button type="submit">Použít filtry</button>
+      <a class="reset" href="/{{ category }}/{{ offer_type }}">Zrušit vše</a>
+      <span class="count">Zobrazeno <b>{{ groups|length }}</b> z {{ celkem }} nabídek</span>
+    </div>
+  </form>
+</section>
+
+<!-- Dojizdeni: cilova zastavka (ulozi se do prohlizece, odkazy do IDOSu se skladaji na klientovi) -->
+<section class="dojezd">
+  <span class="dojezd-icon">🚌</span>
+  <label class="dojezd-lbl" for="dojezd-cil">Dojíždím do zastávky:</label>
+  <input type="text" id="dojezd-cil" class="dojezd-input" placeholder="např. Pardubice hl.n., Chrudim,,Škola…" autocomplete="off">
+  <span class="dojezd-note" id="dojezd-note"></span>
+  <span class="dojezd-help">u každé nabídky se objeví spojení z její nejbližší zastávky do zadané zastávky (přes IDOS)</span>
+</section>
+
+<!-- Seznam -->
+<main class="list">
+  {% if not groups %}
+    <p class="empty">Žádné nabídky neodpovídají filtru. Pokud jste ještě neaktualizovali data, klikněte nahoře na <strong>Aktualizovat</strong>.</p>
+  {% endif %}
+
+  {% for g in groups %}
+  <article class="card card-nemovitost">
+    <div class="col-rank"><div class="rank">{{ loop.index }}</div></div>
+
+    <div class="col-thumb">
+      {% if g.image_url %}
+        <div class="thumb"><img src="{{ g.image_url }}" alt="" loading="lazy"></div>
+      {% else %}
+        <div class="thumb no-img">bez fotografie</div>
+      {% endif %}
+    </div>
+
+    <div class="body">
+      <div class="card-head">
+        <div class="head-left">
+          <h3>{{ g.title or (kat_popis ~ ' Chrudim') }}</h3>
+          <div class="loc">{{ g.city or "Chrudim" }}{% if g.locality %} · {{ g.locality }}{% elif g.city_part %} · {{ g.city_part }}{% endif %}</div>
+        </div>
+        {% if g.skore_info %}
+          <div class="skore skore-{{ g.skore_info.band }}" title="Skóre atraktivity {{ g.score }}/100 – {{ g.skore_info.label }}. Orientační pořadí podle nabídkových údajů, NE ocenění. Jistota: {{ g.skore_info.jistota }}.">
+            <span>SKÓRE</span><b>{{ g.score }}</b>
+          </div>
+        {% endif %}
+        {% if g.penb %}
+          <div class="penb penb-{{ g.penb }}" title="Energetická náročnost budovy">
+            <span>PENB</span><b>{{ g.penb }}</b>
+          </div>
+        {% else %}
+          <div class="penb penb-na" title="Energetická náročnost neuvedena"><span>PENB</span><b>?</b></div>
+        {% endif %}
+      </div>
+
+      <!-- Klicove udaje -->
+      <div class="keyfigures kf-nemovitost">
+        <div class="kf kf-price">
+          <span class="kf-label">{{ 'Nájem / měsíc' if je_pronajem else 'Cena' }}</span>
+          <span class="kf-val">{% if je_pronajem %}{{ g.price|kc_mes }}{% else %}{{ g.price|kc }}{% endif %}</span>
+          {% if je_pronajem %}
+            <span class="kf-costs">+ náklady na bydlení:
+              {% if g.energy_cost %}<b>{{ g.energy_cost|kc_mes }}</b>{% if g.energy_note %} + {{ g.energy_note }}{% endif %}{% elif g.energy_note %}{{ g.energy_note }}{% else %}<em>neuvedeno</em>{% endif %}
+            </span>
+            {% if g.total_monthly %}<span class="kf-total">= celkem ~ {{ g.total_monthly|kc_mes }}</span>{% endif %}
+            {% if g.energy_ai %}<img class="llama-icon" src="/static/llama.svg" alt="AI"
+                 title="Náklady na bydlení dohledala lokální AI (Ollama) v popisu inzerátu. Ověřte v originále."/>{% endif %}
+          {% endif %}
+        </div>
+        <div class="kf"><span class="kf-label">Dispozice</span><span class="kf-val">{{ g.dispozice or "neuvedeno" }}</span></div>
+        <div class="kf"><span class="kf-label">Plocha</span><span class="kf-val">{{ g.area|m2 }}</span></div>
+        <div class="kf"><span class="kf-label">Cena za m²</span><span class="kf-val">{{ g.price_per_m2|pm2 }}</span></div>
+      </div>
+
+      <!-- Vizualni vzhled z fotek (AI odhad, ne fakt; needstupuje do ceny) -->
+      {% if g.vzhled and g.vzhled.value %}
+      {% set vc = 'mod' if g.vzhled.value == 'moderní' else ('str' if g.vzhled.value == 'středně moderní' else 'zas') %}
+      <div class="vzhled" title="{% if g.vzhled.duvod %}{{ g.vzhled.duvod }} — {% endif %}odhad AI z fotek, ne ověřený fakt.">
+        <span class="vzhled-icon">📷</span>
+        <span class="vzhled-lbl">Vzhled z fotek</span>
+        <span class="vzhled-val vzhled-{{ vc }}">{{ g.vzhled.value }}</span>
+        {% if g.vzhled.duvod %}<span class="vzhled-duvod">{{ g.vzhled.duvod }}</span>{% endif %}
+        <span class="vzhled-ai" title="Odhad AI z fotek – jen vizuální dojem, ne ověřený stav.">AI odhad</span>
+      </div>
+      {% endif %}
+
+      <!-- Cenova kotva vuci srovnatelnym nabidkam -->
+      {% if g.oceneni %}
+      {% set o = g.oceneni %}
+      {% set cc = 'vys' if o.jistota == 'vysoká' else ('str' if o.jistota == 'střední' else 'niz') %}
+      {# pri nizke jistote ztlumime barvu verdiktu, aby netvrdil vic, nez data unesou #}
+      {% set sc = o.smer if (o.smer and o.jistota != 'nízká') else 'na' %}
+      <div class="ocen ocen-{{ sc }}">
+        <span class="ocen-verdict">
+          {% if o.smer == 'low' %}▼{% elif o.smer == 'high' %}▲{% elif o.smer == 'mid' %}≈{% else %}?{% endif %}
+          {% if o.smer and o.jistota == 'nízká' %}orientačně {% endif %}{{ o.valuation }}{% if o.pct is not none and o.smer != 'mid' %} <b>{{ o.pct|abs }} %</b>{% endif %}
+        </span>
+        {% if o.median %}<span class="ocen-base" title="Porovnáno s mediánem ceny za m² {{ o.zaklad }} ({{ o.n }} nabídek). Jde o nabídkové ceny, ne realizované.">vs. {{ o.zaklad }} · {{ o.n }} nab.</span>{% endif %}
+        {% if o.expected_low %}<span class="ocen-range" title="Kde by se cena podobné nabídky této velikosti obvykle pohybovala.">obvyklé rozmezí {% if je_pronajem %}{{ o.expected_low|kc_mes }} – {{ o.expected_high|kc_mes }}{% else %}{{ o.expected_low|kc }} – {{ o.expected_high|kc }}{% endif %}</span>{% endif %}
+        <span class="ocen-cert cert-{{ cc }}" title="Míra jistoty tohoto srovnání podle dostupnosti ověřených údajů a počtu srovnatelných nabídek.">jistota {{ o.jistota }}</span>
+        {% if o.caveat %}<span class="ocen-caveat" title="{{ o.caveat }}">⚠ {{ o.caveat }}</span>{% endif %}
+      </div>
+      {% if o.rizika %}
+      <div class="riziko">
+        <span class="riziko-head">⚠ Ke kontrole</span>
+        {% for r in o.rizika %}<span class="riziko-item" title="{{ r.label }}: „{{ r.citace }}“ (tvrzení inzerátu)">{{ r.value }}</span>{% endfor %}
+        <span class="riziko-note">vážný signál z popisu – snižuje jistotu, ověřte na místě / v dokumentech</span>
+      </div>
+      {% endif %}
+      {% endif %}
+
+      <!-- Faktory jako vysvetleni odchylky od kotvy (ne body) -->
+      {% if g.faktory_vyklad and (g.faktory_vyklad.vyklad or g.faktory_vyklad.pro_vyssi or g.faktory_vyklad.pro_nizsi) %}
+      {% set fv = g.faktory_vyklad %}
+      <div class="vyklad">
+        {% if fv.vyklad %}<p class="vyklad-text">{{ fv.vyklad }}</p>{% endif %}
+        <div class="vyklad-cols">
+          {% if fv.pro_vyssi %}
+          <div class="vyklad-col vc-plus">
+            <span class="vc-head">↑ pro vyšší cenu</span>
+            {% for f in fv.pro_vyssi %}<em class="vc-item" title="{{ f.label }}: „{{ f.citace }}“ (tvrzení inzerátu)">{{ f.value }}</em>{% endfor %}
+          </div>{% endif %}
+          {% if fv.pro_nizsi %}
+          <div class="vyklad-col vc-minus">
+            <span class="vc-head">↓ pro nižší cenu</span>
+            {% for f in fv.pro_nizsi %}<em class="vc-item" title="{{ f.label }}: „{{ f.citace }}“ (tvrzení inzerátu)">{{ f.value }}</em>{% endfor %}
+          </div>{% endif %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Souhrnne oduvodneni (skladaci) -->
+      {% if g.oduvodneni and (g.oduvodneni.duvody or g.oduvodneni.omezeni) %}
+      {% set od = g.oduvodneni %}
+      <details class="ai-drop odu-drop">
+        <summary>
+          <span class="ai-drop-title">Odůvodnění hodnocení</span>
+          <span class="ai-caret" aria-hidden="true">▾</span>
+        </summary>
+        <div class="odu-body">
+          {% if g.skore_info %}
+          <div class="skore-rozpis">
+            <div class="sr-head">Skóre atraktivity <b>{{ g.score }}/100</b> · {{ g.skore_info.label }} <span class="sr-cert">(jistota {{ g.skore_info.jistota }})</span></div>
+            <table class="sr-tab">
+              {% for it in g.skore_info.breakdown %}
+              <tr><td>{{ it.k }}</td><td class="sr-b">{{ it.b }}/{{ it.max }}</td><td class="sr-p">{{ it.p }}</td></tr>
+              {% endfor %}
+              {% if g.skore_info.bonus_pop %}<tr class="sr-bonus"><td>Vzhled (bonus)</td><td class="sr-b">+{{ g.skore_info.bonus }}</td><td class="sr-p">{{ g.skore_info.bonus_pop }}</td></tr>{% endif %}
+              {% if g.skore_info.penalty_pop %}<tr class="sr-pen"><td>Riziko (penalizace)</td><td class="sr-b">−{{ g.skore_info.penalty }}</td><td class="sr-p">{{ g.skore_info.penalty_pop }}</td></tr>{% endif %}
+            </table>
+            <div class="sr-note">Orientační pořadí podle nabídkových údajů, není to ocenění ani znalecký posudek.</div>
+          </div>
+          {% endif %}
+          {% if od.duvody %}
+          <ul class="odu-list">
+            {% for d in od.duvody %}<li>{{ d }}</li>{% endfor %}
+          </ul>{% endif %}
+          {% if od.omezeni %}
+          <div class="odu-omezeni">
+            <span class="odu-omezeni-head">Omezení a nejistoty</span>
+            <ul class="odu-list odu-muted">
+              {% for x in od.omezeni %}<li>{{ x }}</li>{% endfor %}
+            </ul>
+          </div>{% endif %}
+        </div>
+      </details>
+      {% endif %}
+
+      <!-- Zdroje -->
+      <div class="row">
+        <span class="row-label">Zdroje</span>
+        <div class="chips">
+          {% for z in g.zdroje %}
+            <a class="src-link" href="{{ z.url }}" target="_blank" rel="noopener">
+              {{ zdroje_nazvy.get(z.source, z.source) }}{% if z.price %} · {% if je_pronajem %}{{ z.price|kc_mes }}{% else %}{{ z.price|kc }}{% endif %}{% endif %} ↗
+            </a>
+          {% endfor %}
+          {% if g.sources|length > 1 %}<span class="chip multi">spojeno z {{ g.sources|length }} zdrojů</span>{% endif %}
+          {% if g.mozna_duplicita %}<span class="chip dupe">možná duplicita</span>{% endif %}
+        </div>
+      </div>
+
+      <!-- Doprava: nejblizsi zastavka + spojeni do skoly (odkaz sklada JS z ulozene cilove zastavky) -->
+      {% if g.zastavka %}
+      <div class="doprava" data-from="{{ g.zastavka.name }}">
+        <span class="dopr-icon">{{ '🚆' if g.zastavka.kind == 'vlak' else '🚏' }}</span>
+        <span class="dopr-stop">{{ g.zastavka.name }}</span>
+        <span class="dopr-walk">{{ g.zastavka.walk_min }} min pěšky · {{ g.zastavka.dist_m }} m</span>
+        <a class="dopr-idos" href="#" target="_blank" rel="noopener" hidden>Spojení do školy ↗</a>
+        <span class="dopr-hint">zadej cílovou zastávku nahoře ↑</span>
+      </div>
+      {% endif %}
+
+      {% if g.ai_faktory_souhrn and g.ai_faktory_souhrn.znamych > 0 %}
+      {% set n = g.ai_faktory_souhrn.znamych %}
+      <details class="ai-drop">
+        <summary title="Přečteno z textu inzerátu {{ 'modelem OpenAI' if g.ai_factors_provider == 'openai' else 'lokální AI (Ollama)' }}. Tvrzení inzerátu (neověřená fakta) – u každého najetím myší uvidíte doslovnou citaci.">
+          <img class="llama-icon inline" src="/static/llama.svg" alt="AI">
+          <span class="ai-drop-title">Co uvádí inzerát</span>
+          <span class="ai-drop-count">{{ n }} {% if n == 1 %}faktor{% elif n < 5 %}faktory{% else %}faktorů{% endif %}</span>
+          {% if g.ai_faktory_souhrn.manual %}<span class="afac afac-warn">⚠ ke kontrole</span>{% endif %}
+          <span class="ai-caret" aria-hidden="true">▾</span>
+        </summary>
+        <div class="ai-factors">
+          {% for f in g.ai_factors if f.origin == 'LISTING_CLAIM' %}
+            {% set cls = 'warn' if f.impact == 'M' else ('plus' if (f.impact is number and f.impact > 0) else ('minus' if (f.impact is number and f.impact < 0) else 'zero')) %}
+            <span class="afac afac-{{ cls }}" title="V inzerátu uvedeno: „{{ f.citace }}“ — tvrzení inzerátu, není ověřeno.">
+              <b>{{ f.label }}:</b> {{ f.value }}{% if f.impact == 'M' %} ⚠{% endif %}
+            </span>
+          {% endfor %}
+          {% if g.ai_faktory_souhrn.unknown > 0 %}<span class="afac afac-na" title="Tyto faktory se z textu inzerátu nepodařilo doložit.">+ {{ g.ai_faktory_souhrn.unknown }} neuvedeno</span>{% endif %}
+        </div>
+      </details>
+      {% endif %}
+
+      <div class="card-foot">
+        <span class="status status-{{ 'ok' if g.is_active else 'warn' }}">{{ g.status }}</span>
+        {% if g.days_on_market is not none %}<span class="chip" {% if g.date_added %}title="Vloženo na inzertním serveru {{ g.date_added|datum }}"{% else %}title="Od prvního nalezení naší aplikací (zdroj datum vložení neuvádí)"{% endif %}>v nabídce {{ g.days_on_market }} dní{% if g.date_added %} · od {{ g.date_added|datum }}{% endif %}</span>{% endif %}
+        {% if g.price_old and g.price and g.price_old > g.price %}<span class="chip drop">▼ zlevněno o {{ ((g.price_old-g.price)/g.price_old*100)|round|int }} %</span>{% endif %}
+        <span class="checked">poslední kontrola: {{ g.last_checked }}</span>
+      </div>
+    </div>
+  </article>
+  {% endfor %}
+</main>
+
+<footer>
+  <p>Údaje jsou nabídkové a orientační, přebrané z inzerátů. Cena energií a energetická náročnost
+  se u části nabídek nepodařila zjistit – pak je uvedeno „neuvedeno". Nejde o ověření technického
+  ani právního stavu nemovitosti.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sniper Chrudim</title>
+  <link rel="stylesheet" href="/static/style.css?v={{ asset_ver() }}">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <h1>Sniper Chrudim</h1>
+    <span class="sub">interní vyhledávač nemovitostí – Chrudim</span>
+  </div>
+  <form method="post" action="/aktualizovat" class="update-form"
+        onsubmit="this.querySelector('button').disabled=true; this.querySelector('button').textContent='Aktualizuji…';">
+    <button type="submit">Aktualizovat vše</button>
+  </form>
+</header>
+
+<section class="hero">
+  <h2>Co chcete prohlížet?</h2>
+  <p class="hero-sub">Vyberte kategorii nemovitostí v Chrudimi a jeho částech.</p>
+
+  <div class="tiles">
+    {% for d in dlazdice %}
+    <a class="tile tile-{{ d.category }}" href="{{ d.url }}">
+      <span class="tile-ikona">{{ d.ikona }}</span>
+      <span class="tile-nazev">{{ d.nazev }}</span>
+      <span class="tile-podnazev">{{ d.podnazev }}</span>
+      <span class="tile-count">{{ d.count }} <em>aktivních</em></span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="sources landing-sources">
+  {% if runs %}
+    <div class="src-summary">Poslední aktualizace zdrojů:</div>
+    {% for r in runs %}
+      <span class="src-chip {{ 'ok' if r['status']=='ok' else 'bad' }}">
+        {{ zdroje_nazvy.get(r['source'], r['source']) }}:
+        {% if r['status']=='ok' %}dostupný{% else %}nedostupný{% endif %}
+        <em>{{ r['finished_at'][:16].replace('T',' ') }}</em>
+      </span>
+    {% endfor %}
+  {% else %}
+    <span class="src-chip">Zatím bez dat – klikněte na <strong>Aktualizovat vše</strong> (může trvat 1–2 minuty).</span>
+  {% endif %}
+</section>
+
+<footer>
+  <p>Interní light prototyp. Data pocházejí z veřejných inzerátů (Sreality, Reality.iDNES, Bezrealitky).
+  Údaje jsou nabídkové a orientační, nejde o ověření právního ani technického stavu.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sniper Chrudim – pozemky na prodej</title>
+  <link rel="stylesheet" href="/static/style.css?v={{ asset_ver() }}">
+  <script src="/static/app.js?v={{ asset_ver() }}" defer></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <a class="back" href="/">← Rozcestník</a>
+    <h1>Pozemky na prodej</h1>
+    <span class="sub">Chrudim – interní light prototyp</span>
+  </div>
+  <form method="post" action="/aktualizovat" class="update-form"
+        onsubmit="this.querySelector('button').disabled=true; this.querySelector('button').textContent='Aktualizuji…';">
+    <input type="hidden" name="category" value="pozemky">
+    <input type="hidden" name="offer_type" value="prodej">
+    <button type="submit">Aktualizovat pozemky</button>
+  </form>
+</header>
+
+<!-- Stav zdroju / posledni kontrola -->
+<section class="sources">
+  {% if runs %}
+    {% for r in runs %}
+      <span class="src-chip {{ 'ok' if r['status']=='ok' else 'bad' }}">
+        {{ zdroje_nazvy.get(r['source'], r['source']) }}:
+        {% if r['status']=='ok' %}{{ r['found'] }} nabídek{% else %}nedostupný{% endif %}
+        <em>{{ r['finished_at'][:16].replace('T',' ') }}</em>
+      </span>
+    {% endfor %}
+  {% else %}
+    <span class="src-chip">Zatím bez dat – klikněte na <strong>Aktualizovat</strong>.</span>
+  {% endif %}
+</section>
+
+<!-- Statistiky lokality -->
+<section class="stats">
+  <h2>Chrudim – přehled</h2>
+  <div class="stat-grid">
+    <div class="stat"><b>{{ stats.pocet_aktivnich }}</b><span>aktivních nabídek</span></div>
+    <div class="stat"><b>{{ stats.pm2_median|pm2 }}</b><span>medián ceny/m²</span></div>
+    <div class="stat"><b>{{ stats.pm2_prumer|pm2 }}</b><span>průměr ceny/m²</span></div>
+    <div class="stat"><b>{{ stats.pm2_min|pm2 }}</b><span>nejnižší cena/m²</span></div>
+    <div class="stat"><b>{{ stats.pm2_max|pm2 }}</b><span>nejvyšší cena/m²</span></div>
+    <div class="stat"><b>{{ stats.cena_prumer|kc }}</b><span>průměrná cena</span></div>
+    <div class="stat"><b>{{ stats.vymera_prumer|m2 }}</b><span>průměrná výměra</span></div>
+  </div>
+  {% if stats.pocet_dle_typu %}
+  <div class="types">
+    <span>Podle typu:</span>
+    {% for t, n in stats.pocet_dle_typu.items() %}
+      <span class="type-badge">{{ typy.get(t, t) }}: {{ n }}</span>
+    {% endfor %}
+  </div>
+  {% endif %}
+</section>
+
+<!-- Filtry a razeni -->
+<section class="filters">
+  <form method="get" action="/pozemky">
+    <input type="hidden" name="fsubmit" value="1">
+    <div class="filter-checks">
+      <fieldset class="fgroup">
+        <legend>Typ pozemku</legend>
+        <div class="chk-row">
+          {% for t, popis in typy.items() %}
+            <label class="chk"><input type="checkbox" name="typ" value="{{ t }}" {{ 'checked' if t in filtr.typ }}> {{ popis }}</label>
+          {% endfor %}
+        </div>
+      </fieldset>
+      <fieldset class="fgroup">
+        <legend>Zdroj</legend>
+        <div class="chk-row">
+          {% for k, nazev in zdroje_nazvy.items() %}
+            <label class="chk"><input type="checkbox" name="zdroj" value="{{ k }}" {{ 'checked' if k in filtr.zdroj }}> {{ nazev }}</label>
+          {% endfor %}
+        </div>
+      </fieldset>
+      <fieldset class="fgroup">
+        <legend>Hodnocení</legend>
+        <div class="chk-row">
+          {% for h in ["velmi zajímavá nabídka","zajímavá nabídka","běžná nabídka","méně zajímavá nabídka","nelze spolehlivě vyhodnotit"] %}
+            <label class="chk"><input type="checkbox" name="hodnoceni" value="{{ h }}" {{ 'checked' if h in filtr.hodnoceni }}> {{ h }}</label>
+          {% endfor %}
+        </div>
+      </fieldset>
+      <fieldset class="fgroup">
+        <legend>Stav</legend>
+        <div class="chk-row">
+          <label class="chk"><input type="checkbox" name="stav" value="aktivni" {{ 'checked' if 'aktivni' in filtr.stav }}> aktivní</label>
+          <label class="chk"><input type="checkbox" name="stav" value="neovereno" {{ 'checked' if 'neovereno' in filtr.stav }}> neověřené</label>
+        </div>
+      </fieldset>
+      <label class="sort-label">Řadit podle
+        <select name="sort">
+          {% for k, popis in [
+              ("skore","skóre – nejlepší"),
+              ("cena_m2_asc","cena za m² – od nejnižší"),
+              ("cena_m2_desc","cena za m² – od nejvyšší"),
+              ("cena_asc","celková cena – od nejnižší"),
+              ("cena_desc","celková cena – od nejvyšší"),
+              ("plocha_asc","plocha – od nejmenší"),
+              ("plocha_desc","plocha – od největší"),
+              ("nejnovejsi","nejnovější"),
+              ("zlevneni","největší zlevnění")] %}
+            <option value="{{ k }}" {{ 'selected' if sort==k }}>{{ popis }}</option>
+          {% endfor %}
+        </select>
+      </label>
+    </div>
+
+    <div class="filter-ranges">
+      <div class="range" data-unit="Kč" data-min="{{ bounds.cena.min }}" data-max="{{ bounds.cena.max }}" data-step="{{ bounds.cena.step }}">
+        <div class="range-head"><span>Cena</span><output class="range-out"></output></div>
+        <div class="range-track">
+          <div class="range-fill"></div>
+          <input type="range" class="range-min" name="cena_min" min="{{ bounds.cena.min }}" max="{{ bounds.cena.max }}" step="{{ bounds.cena.step }}" value="{{ filtr.cena_min or bounds.cena.min }}">
+          <input type="range" class="range-max" name="cena_max" min="{{ bounds.cena.min }}" max="{{ bounds.cena.max }}" step="{{ bounds.cena.step }}" value="{{ filtr.cena_max or bounds.cena.max }}">
+        </div>
+      </div>
+      <div class="range" data-unit="m²" data-min="{{ bounds.plocha.min }}" data-max="{{ bounds.plocha.max }}" data-step="{{ bounds.plocha.step }}">
+        <div class="range-head"><span>Plocha</span><output class="range-out"></output></div>
+        <div class="range-track">
+          <div class="range-fill"></div>
+          <input type="range" class="range-min" name="plocha_min" min="{{ bounds.plocha.min }}" max="{{ bounds.plocha.max }}" step="{{ bounds.plocha.step }}" value="{{ filtr.plocha_min or bounds.plocha.min }}">
+          <input type="range" class="range-max" name="plocha_max" min="{{ bounds.plocha.min }}" max="{{ bounds.plocha.max }}" step="{{ bounds.plocha.step }}" value="{{ filtr.plocha_max or bounds.plocha.max }}">
+        </div>
+      </div>
+      <div class="range" data-unit="Kč/m²" data-min="{{ bounds.pm2.min }}" data-max="{{ bounds.pm2.max }}" data-step="{{ bounds.pm2.step }}">
+        <div class="range-head"><span>Cena za m²</span><output class="range-out"></output></div>
+        <div class="range-track">
+          <div class="range-fill"></div>
+          <input type="range" class="range-min" name="pm2_min" min="{{ bounds.pm2.min }}" max="{{ bounds.pm2.max }}" step="{{ bounds.pm2.step }}" value="{{ filtr.pm2_min or bounds.pm2.min }}">
+          <input type="range" class="range-max" name="pm2_max" min="{{ bounds.pm2.min }}" max="{{ bounds.pm2.max }}" step="{{ bounds.pm2.step }}" value="{{ filtr.pm2_max or bounds.pm2.max }}">
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-actions">
+      <button type="submit">Použít filtry</button>
+      <a class="reset" href="/pozemky">Zrušit vše</a>
+      <span class="count">Zobrazeno <b>{{ groups|length }}</b> z {{ celkem }} nabídek</span>
+    </div>
+  </form>
+</section>
+
+<!-- Seznam nabidek -->
+<main class="list">
+  {% if not groups %}
+    <p class="empty">Žádné nabídky neodpovídají filtru. Pokud jste ještě neaktualizovali data, klikněte nahoře na <strong>Aktualizovat</strong>.</p>
+  {% endif %}
+
+  {% for g in groups %}
+  {% set sc = 'high' if g.score>=80 else ('mid' if g.score>=60 else ('low' if g.score>=40 else 'poor')) %}
+  <article class="card score-{{ sc }}">
+    <div class="col-rank">
+      <div class="rank">{{ loop.index }}</div>
+    </div>
+
+    <div class="col-thumb">
+      {% if g.image_url %}
+        <div class="thumb"><img src="{{ g.image_url }}" alt="" loading="lazy"></div>
+      {% else %}
+        <div class="thumb no-img">bez fotografie</div>
+      {% endif %}
+    </div>
+
+    <div class="body">
+      <!-- Zahlavi: nazev + lokalita + skore -->
+      <div class="card-head">
+        <div class="head-left">
+          <h3>{{ g.title or "Pozemek Chrudim" }}</h3>
+          <div class="loc">{{ g.city or "Chrudim" }}{% if g.city_part %} · {{ g.city_part }}{% elif g.locality %} · {{ g.locality }}{% endif %}</div>
+        </div>
+        <div class="score-badge" title="Interní skóre 0–100">
+          <div class="score-num"><b>{{ g.score }}</b><span>/100</span></div>
+          <em class="label label-{{ sc }}">{{ g.label }}</em>
+        </div>
+      </div>
+
+      <!-- Klicove udaje: systematicka mrizka -->
+      <div class="keyfigures">
+        <div class="kf kf-price"><span class="kf-label">Cena</span><span class="kf-val">{{ g.price|kc }}</span></div>
+        <div class="kf"><span class="kf-label">Cena za m²</span><span class="kf-val">{{ g.price_per_m2|pm2 }}</span></div>
+        <div class="kf"><span class="kf-label">Plocha</span><span class="kf-val">{{ g.area|m2 }}</span></div>
+        <div class="kf"><span class="kf-label">Typ pozemku</span><span class="kf-val">{{ g.land_type_popis }}</span></div>
+      </div>
+
+      <!-- Site -->
+      <div class="row">
+        <span class="row-label">Sítě</span>
+        <div class="chips">
+          {% set u = g.utilities %}
+          {% for name, key in [("Elektřina","elektrina"),("Voda","voda"),("Kanalizace","kanalizace"),("Plyn","plyn")] %}
+            {% if u.get(key) is true %}
+              <span class="chip yes">✓ {{ name }}</span>
+            {% else %}
+              <span class="chip na">{{ name }}: neuvedeno</span>
+            {% endif %}
+          {% endfor %}
+          {% if u.get("pristup") %}<span class="chip yes">✓ Přístup: {{ u.pristup }}</span>{% endif %}
+        </div>
+      </div>
+
+      <!-- Hodnoceni: valuace, zlevneni, jistota -->
+      <div class="row">
+        <span class="row-label">Hodnocení</span>
+        <div class="chips">
+          <span class="chip val">{{ g.valuation }}</span>
+          {% if g.price_old and g.price and g.price_old > g.price %}
+            <span class="chip drop">▼ zlevněno o {{ ((g.price_old-g.price)/g.price_old*100)|round|int }} %</span>
+          {% endif %}
+          {% if g.days_on_market is not none %}
+            <span class="chip" {% if g.date_added %}title="Vloženo na Sreality {{ g.date_added|datum }}"{% endif %}>v nabídce {{ g.days_on_market }} dní{% if g.date_added %} · od {{ g.date_added|datum }}{% endif %}</span>
+          {% endif %}
+          <span class="chip certainty">jistota: {{ g.jistota }}</span>
+        </div>
+      </div>
+
+      <!-- Stav + zdroje -->
+      <div class="row">
+        <span class="row-label">Zdroje</span>
+        <div class="chips">
+          {% for z in g.zdroje %}
+            <a class="src-link" href="{{ z.url }}" target="_blank" rel="noopener">
+              {{ zdroje_nazvy.get(z.source, z.source) }}{% if z.price %} · {{ z.price|kc }}{% endif %} ↗
+            </a>
+          {% endfor %}
+          {% if g.sources|length > 1 %}<span class="chip multi">spojeno z {{ g.sources|length }} zdrojů</span>{% endif %}
+          {% if g.mozna_duplicita %}<span class="chip dupe">možná duplicita</span>{% endif %}
+        </div>
+      </div>
+
+      <div class="card-foot">
+        <span class="status status-{{ 'ok' if g.is_active else 'warn' }}">{{ g.status }}</span>
+        <span class="checked">poslední kontrola: {{ g.last_checked }}</span>
+        {% if g.price_diff or g.area_diff %}
+          <span class="diffs">
+            {% if g.price_diff %}rozdíl ceny mezi zdroji {{ g.price_diff|kc }}{% endif %}
+            {% if g.price_diff and g.area_diff %} · {% endif %}
+            {% if g.area_diff %}rozdíl výměry {{ g.area_diff|m2 }}{% endif %}
+          </span>
+        {% endif %}
+      </div>
+
+      <!-- Oduvodneni poradi -->
+      <details class="reason">
+        <summary>Proč je nabídka zařazena zde</summary>
+        <div class="reason-body">
+          <p class="zarazeni">{{ g.reasoning.zarazeni }} · {{ g.reasoning.valuation }}</p>
+          {% if g.reasoning.duvody %}
+          <p class="rlabel">Důvody</p>
+          <ul>{% for d in g.reasoning.duvody %}<li>{{ d }}</li>{% endfor %}</ul>
+          {% endif %}
+          {% if g.reasoning.omezeni %}
+          <p class="rlabel">Omezení</p>
+          <ul class="limits">{% for o in g.reasoning.omezeni %}<li>{{ o }}</li>{% endfor %}</ul>
+          {% endif %}
+          <p class="certline">Jistota hodnocení: <b>{{ g.reasoning.jistota }}</b></p>
+
+          <table class="breakdown">
+            <thead><tr><th>Kritérium</th><th>Body</th><th>Poznámka</th></tr></thead>
+            <tbody>
+            {% for b in g.evaluation.breakdown %}
+              <tr><td>{{ b.kriterium }}</td><td>{{ b.body }} / {{ b.max }}</td><td>{{ b.poznamka }}</td></tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+  </article>
+  {% endfor %}
+</main>
+
+<footer>
+  <p>Skóre a hodnocení jsou orientační a vycházejí pouze z <strong>nabídkových</strong> údajů z inzerátů.
+  Nejde o znalecké ocenění ani ověření právního stavu, sítí či územních omezení. Typ pozemku je převzat z inzerátu.</p>
+</footer>
+</body>
+</html>
